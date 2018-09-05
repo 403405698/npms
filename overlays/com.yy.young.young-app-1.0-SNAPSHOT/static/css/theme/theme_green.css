@@ -1,0 +1,10 @@
+@charset "UTF-8";
+.bg-head{ /*顶部背景色*/
+    background: #46BE8A;
+}
+.tools-ul li:hover{ /*顶部工具栏悬浮变色*/
+    background-color: #3FAB7C;
+}
+.bg-right{ /*右侧背景*/
+    background-color: #F1F4F5;
+}

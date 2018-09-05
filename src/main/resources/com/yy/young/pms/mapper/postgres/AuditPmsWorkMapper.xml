@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsWork">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.start_time AS "startTime",
+        O.stop_time AS "stopTime",
+        O.work_company AS "workCompany",
+        O.work_dept AS "workDept",
+        O.post AS "post",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+        ,O.content AS "content"
+        ,O.order_num AS "orderNum"
+        ,O.collect_status AS "collectStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsWork" resultType="com.yy.young.pms.model.AuditPmsWork">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_work O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="workCompany != null and workCompany != ''">
+                AND O.work_company LIKE '%${workCompany}%'
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+            <if test="content != null">
+                AND O.content  LIKE '%${content}%'
+            </if>
+            <choose>
+                <when test="collectStatus != null">
+                    AND O.collect_status = #{collectStatus}
+                </when>
+                <otherwise>
+                    AND (O.collect_status != 1 OR  O.collect_status IS NULL)
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY O.order_num,O.start_time,O.id ASC
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsWork" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_work O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsWork">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_work O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsWork">
+        INSERT INTO audit_pms_work(
+            id,
+            user_id,
+            start_time,
+            stop_time,
+            work_company,
+            work_dept,
+            post,
+            item_id,
+            status
+            ,lock_status
+            ,content
+            ,order_num
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{startTime},
+            #{stopTime},
+            #{workCompany},
+            #{workDept},
+            #{post},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+            ,#{content}
+            ,#{orderNum}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsWork">
+        UPDATE audit_pms_work
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="startTime != null">
+            start_time = #{startTime},
+            </if>
+            <if test="stopTime != null">
+            stop_time = #{stopTime},
+            </if>
+            <if test="workCompany != null">
+            work_company = #{workCompany},
+            </if>
+            <if test="workDept != null">
+            work_dept = #{workDept},
+            </if>
+            <if test="post != null">
+            post = #{post},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="orderNum != null">
+                order_num = #{orderNum},
+            </if>
+            <if test="collectStatus != null">
+                collect_status = #{collectStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_work WHERE ID = #{id}
+    </delete>
+</mapper>

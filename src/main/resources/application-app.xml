@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/context
+          				http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          				http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- spring管理service,dao -->
+	<context:component-scan base-package="com.yy.young">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!--配置全局的mybatis session模板对象 采用基于spring的实现模板-->
+<!--	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		&lt;!&ndash; 采用如下方式，即构造函数形式事项数据源、mybatis配置文件读取、mybatisSQL文件扫描 &ndash;&gt;
+		<constructor-arg index="0">
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="dataSource" ref="dataSource" />&lt;!&ndash; 数据源 &ndash;&gt;
+				<property name="configLocation" value="classpath:mybatis-config.xml" />&lt;!&ndash; 根据数据库类型读取相应配置文件 &ndash;&gt;
+				<property name="mapperLocations">
+					<list>
+						&lt;!&ndash; 扫描mybatis的SQL文件路径 &ndash;&gt;
+						&lt;!&ndash;<value>classpath*:com/yy/young/**/mapper/oracle/*.xml</value>&ndash;&gt;
+						&lt;!&ndash;<value>classpath*:com/yy/young/**/mapper/mysql/*.xml</value>&ndash;&gt;
+						<value>classpath*:com/yy/young/**/mapper/postgres/*.xml</value>
+						&lt;!&ndash;<value>classpath*:</value>&ndash;&gt;
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>-->
+
+		<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 采用如下方式，即构造函数形式事项数据源、mybatis配置文件读取、mybatisSQL文件扫描 -->
+		<constructor-arg index="0">
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<!--<property name="dataSource" ref="dataSource" />&lt;!&ndash; 数据源OLD &ndash;&gt;-->
+				<property name="dataSource" ref="dynamicDataSource" />
+				<!--<property name="databaseIdProvider" ref="databaseIdProvider" />-->
+				<property name="configLocation" value="classpath:mybatis-config.xml" /><!-- 根据数据库类型读取相应配置文件 -->
+				<property name="mapperLocations">
+					<list>
+						<!-- 扫描mybatis的SQL文件路径 -->
+						<!--<value>classpath*:com/yy/young/**/mapper/oracle/*.xml</value>-->
+						<!--<value>classpath*:com/yy/young/**/mapper/mysql/*.xml</value>-->
+						<value>classpath*:com/yy/young/**/mapper/postgres/*.xml</value>
+						<!--<value>classpath*:</value>-->
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- 配置sqlsession模板操作基础类 -->
+	<bean id="dataAccessDao" class="com.yy.young.dal.dao.impl.DataAccessDaoImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+	</bean>
+	<bean id="dataAccessDao2" class="com.yy.young.pms.service.impl.audit.DataAccessDaoImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+	</bean>
+	
+	<!-- 集中管理spring容器中的bean -->
+	<bean id="springContextHolder" class="com.yy.young.common.util.SpringContextHolder" lazy-init="false"></bean>
+</beans>

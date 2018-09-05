@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/context
+          				http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          				http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!--log模块提供的基础日志处理器-->
+	<bean id="basicLogHandler" class="com.yy.young.log.handler.BasicLogHandler">
+	</bean>
+	<!--log模块提供的默认日志处理器-->
+	<bean id="defaultLogHandler" class="com.yy.young.log.handler.DefaultLogHandler">
+	</bean>
+	<!--....这里可以有多个日志处理器(实现ILogHandler即可)-->
+	<bean id="commonLogHandler" class="com.yy.young.common.core.log.CommonLogHandler">
+	</bean>
+
+	<!--将日志处理器注册到处理器工厂,可以按需注册多个处理器-->
+	<bean id="logHandlerFactory" class="com.yy.young.log.core.LogHandlerFactory">
+		<!--配置工厂的默认处理器(可以设置任意一个处理器为默认处理器),在取不到处理器时将使用此默认处理器-->
+		<property name="defaultHandler" ref="commonLogHandler"></property>
+		<!--配置处理器池-->
+		<property name="handlerPool">
+			<map>
+				<entry key="basicLogHandler" value-ref="basicLogHandler"></entry>
+				<entry key="defaultLogHandler" value-ref="defaultLogHandler"></entry>
+				<entry key="commonLogHandler" value-ref="commonLogHandler"></entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>

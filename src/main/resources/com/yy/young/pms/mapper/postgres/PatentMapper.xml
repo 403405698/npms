@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.patent">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.years AS "years"
+        ,O.patent_name AS "patentName"
+        ,O.patent_number AS "patentNumber"
+        ,O.patent_type AS "patentType"
+        ,O.ranking AS "ranking"
+        ,O.is_attorn AS "isAttorn"
+        ,O.attorn_money AS "attornMoney"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPatentList" parameterType="com.yy.young.pms.model.Patent" resultType="com.yy.young.pms.model.Patent">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_patent O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="patentName != null and patentName != ''">
+                AND O.patent_name LIKE '%${patentName}%'
+            </if>
+        </where>
+        ORDER BY O.years DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getPatentById" resultType="com.yy.young.pms.model.Patent">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_patent O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.Patent">
+        INSERT INTO pms_patent(
+        id
+        ,user_id
+        ,serial_number
+        ,years
+        ,patent_name
+        ,patent_number
+        ,patent_type
+        ,ranking
+        ,is_attorn
+        ,attorn_money
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{years}
+        ,#{patentName}
+        ,#{patentNumber}
+        ,#{patentType}
+        ,#{ranking}
+        ,#{isAttorn}
+        ,#{attornMoney}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.Patent">
+        UPDATE pms_patent
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="patentName != null">
+                patent_name = #{patentName},
+            </if>
+            <if test="patentNumber != null">
+                patent_number = #{patentNumber},
+            </if>
+            <if test="patentType != null">
+                patent_type = #{patentType},
+            </if>
+            <if test="ranking != null">
+                ranking = #{ranking},
+            </if>
+            <if test="isAttorn != null">
+                is_attorn = #{isAttorn},
+            </if>
+            <if test="attornMoney != null">
+                attorn_money = #{attornMoney},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_patent WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    color: #4A4A4A;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+a:hover {
+    color: #4a4a4a;
+}
+
+.container {
+    width: calc(100% - 60px);
+    margin: 20px 32px 33px 22px;
+    /* background: #fff; */
+    min-height: 100%;
+    height: auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear:after {
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0;
+    content: "";
+}
+
+.zoom {
+    zoom: 1;
+}
+
+.layui-icon.layui-icon-refresh {
+    color: #fff;
+}
+
+.person-tit {
+    padding: 18px;
+}
+
+.person-tit .title {
+    padding: 0;
+}
+
+.layui-btn-primary.search {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    color: #62abff;
+    border-color: #62abff;
+}
+
+.layui-btn-primary.change-password {
+    font-size: 14px;
+    color: #FF6600;
+    letter-spacing: 0;
+    background: #FFFFFF;
+    border: 1px solid #FF6600;
+    border-radius: 100px;
+}
+
+.layui-icon-search {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
+
+.form-content .item {
+    position: relative;
+}
+
+.form-content .iconfont.icon-shaixuan {
+    position: absolute;
+    top: 4px;
+    left: 15px;
+}
+
+
+/* 高级筛选 */
+
+.shaixuanBtn a {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    letter-spacing: 0;
+    font-size: 14px;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    color: #4A4A4A;
+}
+
+.shaixuanBtn a.active {
+    border: 1px solid #AD700F;
+    color: #AD700F;
+}
+
+.w-line {
+    width: calc(100% + 40px);
+    height: 1px;
+    background: #ccc;
+    margin-left: -40px;
+    margin-top: 6px;
+    margin-bottom: 26px;
+}
+
+.inquiry-item {
+    position: absolute;
+    left: 680px;
+    top: 0;
+}
+
+.form-content {
+    padding-bottom: 33px;
+}
+
+.now-item {
+    display: inline-block;
+}
+
+.now-item .layui-form-label {
+    width: auto;
+}
+
+.now-item .info {
+    padding: 5px 15px;
+    display: inline-block;
+    padding-left: 0;
+    color: #000;
+    font-size: 14px;
+    letter-spacing: 0;
+}
+
+.now-item .info.num {
+    letter-spacing: 0.5px;
+}
+
+
+/* 表格 */
+
+.layui-table a {
+    margin-right: 30px;
+    font-size: 12px;
+    letter-spacing: 0;
+    color: #378CEF;
+}
+
+.layui-table a.on {
+    color: #1AAD19;
+}
+
+.layui-table a.off {
+    color: #D0021B;
+}
+
+.layui-table a.edit {
+    margin-right: 0;
+    color: #378CEF;
+}
+
+tr.on td {
+    color: #1AAD19;
+}
+
+tr.off td {
+    color: #D0021B;
+}

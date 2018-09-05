@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsSelfEvaluation">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.self_evaluation AS "selfEvaluation"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPmsSelfEvaluationList" parameterType="com.yy.young.pms.model.PmsSelfEvaluation" resultType="com.yy.young.pms.model.PmsSelfEvaluation">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_self_evaluation O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsSelfEvaluationById" resultType="com.yy.young.pms.model.PmsSelfEvaluation">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_self_evaluation O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsSelfEvaluation">
+        INSERT INTO pms_self_evaluation(
+        id
+        ,user_id
+        ,self_evaluation
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{selfEvaluation}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsSelfEvaluation">
+        UPDATE pms_self_evaluation
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="selfEvaluation != null">
+                self_evaluation = #{selfEvaluation},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_self_evaluation WHERE ID = #{id}
+    </delete>
+</mapper>

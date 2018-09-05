@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsPublish">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.serial_number AS "serialNumber",
+        O.years AS "years",
+        O.book_name AS "bookName",
+        O.press AS "press",
+        O.work_type AS "workType",
+        O.ranking AS "ranking",
+        O.write_chapter AS "writeChapter",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsPublish" resultType="com.yy.young.pms.model.AuditPmsPublish">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_publish O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="bookName != null and bookName != ''">
+                AND O.book_name LIKE '%${bookName}%'
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+        </where>
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsPublish" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_publish O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsPublish">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_publish O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsPublish">
+        INSERT INTO audit_pms_publish(
+            id,
+            user_id,
+            serial_number,
+            years,
+            book_name,
+            press,
+            work_type,
+            ranking,
+            write_chapter,
+            item_id,
+            status
+            ,lock_status
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{serialNumber},
+            #{years},
+            #{bookName},
+            #{press},
+            #{workType},
+            #{ranking},
+            #{writeChapter},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsPublish">
+        UPDATE audit_pms_publish
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+            serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+            years = #{years},
+            </if>
+            <if test="bookName != null">
+            book_name = #{bookName},
+            </if>
+            <if test="press != null">
+            press = #{press},
+            </if>
+            <if test="workType != null">
+            work_type = #{workType},
+            </if>
+            <if test="ranking != null">
+            ranking = #{ranking},
+            </if>
+            <if test="writeChapter != null">
+            write_chapter = #{writeChapter},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_publish WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditFieldSelfeval">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.table_name AS "tableName",
+        O.field AS "field",
+        O.field_val AS "fieldVal",
+        O.user_id AS "userId",
+        O.status AS "status"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditFieldSelfeval" resultType="com.yy.young.pms.model.AuditFieldSelfeval">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_field_selfeval O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditFieldSelfeval" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_field_selfeval O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditFieldSelfeval">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_field_selfeval O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditFieldSelfeval">
+        INSERT INTO audit_field_selfeval(
+            id,
+            table_name,
+            field,
+            field_val,
+            user_id,
+            status
+        ) VALUES(
+            #{id},
+            #{tableName},
+            #{field},
+            #{fieldVal},
+            #{userId},
+            #{status}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditFieldSelfeval">
+        UPDATE audit_field_selfeval
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="tableName != null">
+            table_name = #{tableName},
+            </if>
+            <if test="field != null">
+            field = #{field},
+            </if>
+            <if test="fieldVal != null">
+            field_val = #{fieldVal},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_field_selfeval WHERE ID = #{id}
+    </delete>
+</mapper>

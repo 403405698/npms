@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="header clear">
+            <div class="left">
+                <img src="image/logo.jpg" alt="">
+                <h2>中国环境科学研究院人事档案管理系统</h2>
+            </div>
+            <div class="right">
+                <a href="C:\Users\Administrator.USER-20150702AD\Desktop\环科院人事平台\aboutUs.html">关于我们</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="login-box">
+                <div class="tit">
+                    系统登录
+                </div>
+                <form class="form-horizontal" name="submit_form">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label user-label" for="user">用户名</label>
+                        <div class="col-lg-7 user-txt">
+                            <input name="user" type="text" class="form-control" id="user" placeholder="请输入用户名" required />
+                            <span class="tipinfo" ng-show="submit_form.$dirty&&submit_form.user.$error.required">用户名不能为空</span>
+                        </div>
+                    </div>
+                    <div class="form-group password-formGroup">
+                        <label class="col-lg-3 control-label password-label" for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                        <div class="col-lg-7 password-txt">
+                            <input name="password" type="password" class="form-control" id="password" placeholder="请输入密码" required />
+                            <span class="tipinfo" ng-show="submit_form.$dirty&&submit_form.password.$error.required">密码不能为空</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3"></label>
+                        <div class="checkbox col-lg-7">
+                            <label>
+                              <input class="che" type="checkbox">&nbsp;记住用户名
+                              <div class="show-box"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-3 col-lg-7 bottonG">
+                            <button type="button" class="btn btn-primary">登录</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-3 col-lg-7 forget">
+                            <a href="javascript:;">忘记密码?</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Copyright @ 2018-2020 中国环境科学研究院人事档案管理系统</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+/* [Grid表格]--BEGIN */
+.joGrid{padding:0px;margin:0px;width:100%;height:auto;table-layout:fixed;font-size: 12px;
+	font-family: "微软雅黑", "Arial", "Verdana", "Helvetica", "宋体", "sans-serif";}
+.joGrid thead{font-weight: bold;text-align: center;background-color: #EDEDED;}/*标题行加粗居中*/
+.joGrid{border-top:#C8C8C8 solid 1px;}/*表格顶线*/
+.joGrid td{height:25px;border-bottom:#C8C8C8 solid 1px;border-right:#C8C8C8 solid 1px;
+	overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}/*默认高度28,td有下边线和右边线,内容溢出溢出显示...*/
+.joGrid td a{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}/* 保证a标签溢出显示... */
+.joGrid td:last-child{border-right:#C8C8C8 solid 0px;}/*每行的最后一个没有右边线*/
+.joGrid tbody tr:nth-child(2n){background-color:#F9F9F9;}/*tbody数据区偶数行变色*/
+.joGrid tbody tr:hover{background-color:#FFF3CB;}/*鼠标悬浮变色*/
+.joGrid tbody tr[onclick]{cursor: pointer;}/*存在点击事件的行,鼠标变小手*/
+.joGrid tbody tr td[onclick]{cursor: pointer;}/*存在点击事件的td,鼠标变小手*/
+.joGrid tr td{text-align:center;}/*默认居中*/
+.joGrid tr td[align="center"]{text-align:center;}/*居中*/
+.joGrid tr td[align="left"]{text-align:left;}/*靠左*/
+.joGrid tr td[align="right"]{text-align:right;}/*靠右*/
+.joGrid[noChangeColor] tbody tr:nth-child(2n){background-color:inherit;}/*对拥有noChangeColor属性的Grid取消偶数行变色*/
+.joGrid[noHoverColor] tbody tr:hover{background-color:inherit;}/*对拥有noHoverColor属性的Grid消除悬浮变色属性*/
+/* [Grid表格]--END */
+
+/* [Form表单]--BEGIN */
+.joForm{width:100%;height:auto;table-layout:fixed;font-size:12px;
+font-family: "微软雅黑", "Arial", "Verdana", "Helvetica", "宋体", "sans-serif";border:#DDDDDD solid 1px; border-width:1px 0px 0px 1px;}
+.joForm td{ border-right:#DDDDDD solid 1px;border-bottom:#DDDDDD solid 1px; line-height:25px;}
+.joForm .tit{width:100px; text-align:center;}
+.joForm .tit[align="left"]{text-align:left;}
+.joForm .tit[align="right"]{text-align:right;}
+.joForm .must{ background-image:url(images/must.gif); background-position:0px center; background-repeat:no-repeat;}
+.joForm input[type="text"]{width:calc(100% - 4px); height:25px; text-indent:3px; border:#CECECE solid 1px;padding:0px;}
+.joForm input[type="password"]{width:calc(100% - 4px); height:25px; text-indent:3px; border:#CECECE solid 1px;padding:0px;}
+.joForm input[type="text"][readonly]{background-color:#F0F0F0;color:#6D6D6D;cursor:default;}
+.joForm select{width:100%; height:25px; text-indent:3px; border:#CECECE solid 1px;}
+.joForm input[type="radio"]{ margin:0px 3px; vertical-align:text-top;}
+.joForm textarea{width:calc(100% - 4px); border:#CECECE solid 1px; height:50px; overflow-y:auto;}
+.joForm input[type="checkbox"]{margin:0px;padding:0px;vertical-align:text-top;}
+.joForm input[type="button"]{margin:0px; padding:0px 15px; height:24px;border:#A4A4A4 solid 1px; background-color:#F0F0F0; cursor:pointer;}
+/* 表单模板,大页面使用 */
+.joFormTemplate{width:880px;min-height:550px; padding:0px; background-color:#FFFFFF; margin:10px auto; border-radius:5px 5px 0px 0px; border:#A4A4A4 solid 1px;}
+.joFormTemplate .joFormTemplate_form{width:840px; padding:2px 20px 20px 20px;}
+.joFormTemplate .joFormTemplate_header{width:100%;height:30px; line-height:30px; overflow:hidden; border-bottom:#A4A4A4 solid 1px; background-color:#F6F6F6; border-radius:5px 5px 0px 0px; text-indent:15px;}
+.joFormTemplate .joFormTemplate_title{width:100%; height:65px; line-height:65px; font-size:20px; font-weight:bold; text-align:center;}
+/* [Form表单]--END */
+
+/* [jo弹出窗口css]--BEGIN */
+.joWin{display:none;}
+.joWinShade{width:100%;height:100%;position:fixed;background:rgba(0,0,0,0.1);z-index:101;top:0px;left:0px;}/*display:;*/
+.joWinPlace{ position:absolute;background-color:#FFFFFF;}/*margin-left:50%; margin-top:50px;width:;height:;*/
+.joWinPlace_noShade{background-color:#FFFFFF; top:50px; left:15%; position:absolute;z-index:102;}/*width:;height:;*/
+.joWinClose{border-top:#969696 solid 1px; background:url(images/themes/gray/BGX.png)  no-repeat 0px -1120px; width:46px; height:20px; float:right;}
+.joWinSize{border-top:#969696 solid 1px; background:url(images/themes/gray/BGX.png)  no-repeat -100px -1120px; width:26px; height:20px; float:right;}
+.joWinRefresh{border-top:#969696 solid 1px; background:url(images/themes/gray/BGX.png)  no-repeat -150px -1120px; width:26px; height:20px; float:right;}
+.joWinTb{ width:100%; height:100%; margin:0px; padding:0px;}
+.joWinTb_title{width:100%; height:31px; background:url(images/themes/gray/BGX.png) repeat-x 0px -970px; cursor:move;}
+.joWinTb_title_font{ height:31px; line-height:31px; letter-spacing:1px; white-space:nowrap; overflow:hidden; font-size:14px;}
+.joWinTb_title_btn{ width:120px; }/*height:;*/
+.joWinTb .td_11{ width:6px; height:31px; background:url(images/themes/gray/BGX.png) no-repeat 0px -1070px;}
+.joWinTb .td_13{ width:6px; height:31px; background:url(images/themes/gray/BGX.png) no-repeat -20px -1070px;}
+.joWinTb .td_21{ width:6px; background:url(images/themes/gray/BGY.png) repeat-y -20px 0px;}
+.joWinTb .td_23{ width:6px; background:url(images/themes/gray/BGY.png) repeat-y -40px 0px;}
+.joWinTb .td_31{ width:6px; height:6px; background:url(images/themes/gray/BGX.png) no-repeat -40px -1070px;}
+.joWinTb .td_32{ height:6px; background:url(images/themes/gray/BGX.png) repeat-x 0px -1020px;}
+.joWinTb .td_33{ width:6px; height:6px; background:url(images/themes/gray/BGX.png) no-repeat -60px -1070px;}
+.joWinTb .joWinMain{ width:100%; height:100%; overflow-y:hidden;}/* 弹窗数据区样式overflow-y:auto; */
+.joWinIframe{width: 100%; height: 100%; border: none; background-color: #FFFFFF; margin:0px;padding:0px;}
+/* [jo弹出窗口css]--END */
+
+/* [jo页签css]--BEGIN */
+.joTab{margin:0px;padding:0px;list-style:none;height:32px;line-height:32px;}
+.joTab::after{content:""; display: block;clear:both;}
+.joTab li{width:auto;height:calc(100% - 3px);max-height:35px;float:left;padding:0px 10px;
+text-align:center;border:rgba(36,61,89,0) solid 1px;margin:0px 1px;}
+.joTab li:hover{border:#58AFF7 solid 1px;border-bottom:red solid 2px;cursor:pointer;border-radius:4px 4px 0px 0px;}
+.joTab .cur{border:#58AFF7 solid 1px;border-bottom:red solid 2px;cursor:pointer;border-radius:4px 4px 0px 0px;
+background-color: #58AFF7;color:#FFFFFF;}
+.joTabSheet{display:none;}
+/* [jo页签css]--END */
+
+/* [jo正在加载提示框]--BEGIN */
+.joMsg_loading{width:200px;height:30px;line-height:30px;text-align:center;background-color:#FFFFE1;border:#333333 solid 1px;
+position:fixed; right:30px; bottom:30px;overflow: hidden;letter-spacing: 1px;}
+/* [jo正在加载提示框]--END */

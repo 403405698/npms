@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.communication">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.office_phone AS "officePhone"
+        ,O.mobile_phone AS "mobilePhone"
+        ,O.fax_number AS "faxNumber"
+        ,O.postal_address AS "postalAddress"
+        ,O.email_address AS "emailAddress"
+        ,O.emergency_contact_one AS "emergencyContactOne"
+        ,O.relationship_one AS "relationshipOne"
+        ,O.emergency_contact_two AS "emergencyContactTwo"
+        ,O.relationship_two AS "relationshipTwo"
+        ,O.name_one AS "nameOne"
+        ,O.name_two AS "nameTwo"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getCommunicationList" parameterType="com.yy.young.pms.model.Communication" resultType="com.yy.young.pms.model.Communication">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_communication O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="getCommunicationById" resultType="com.yy.young.pms.model.Communication">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_communication O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.Communication">
+        INSERT INTO pms_communication(
+        id
+        ,user_id
+        ,office_phone
+        ,mobile_phone
+        ,fax_number
+        ,postal_address
+        ,email_address
+        ,emergency_contact_one
+        ,relationship_one
+        ,emergency_contact_two
+        ,relationship_two
+        ,name_one
+        ,name_two
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{officePhone}
+        ,#{mobilePhone}
+        ,#{faxNumber}
+        ,#{postalAddress}
+        ,#{emailAddress}
+        ,#{emergencyContactOne}
+        ,#{relationshipOne}
+        ,#{emergencyContactTwo}
+        ,#{relationshipTwo}
+        ,#{nameOne}
+        ,#{nameTwo}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.Communication">
+        UPDATE pms_communication
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="officePhone != null">
+                office_phone = #{officePhone},
+            </if>
+            <if test="mobilePhone != null">
+                mobile_phone = #{mobilePhone},
+            </if>
+            <if test="faxNumber != null">
+                fax_number = #{faxNumber},
+            </if>
+            <if test="postalAddress != null">
+                postal_address = #{postalAddress},
+            </if>
+            <if test="emailAddress != null">
+                email_address = #{emailAddress},
+            </if>
+            <if test="emergencyContactOne != null">
+                emergency_contact_one = #{emergencyContactOne},
+            </if>
+            <if test="relationshipOne != null">
+                relationship_one = #{relationshipOne},
+            </if>
+            <if test="emergencyContactTwo != null">
+                emergency_contact_two = #{emergencyContactTwo},
+            </if>
+            <if test="relationshipTwo != null">
+                relationship_two = #{relationshipTwo},
+            </if>
+            <if test="nameOne != null">
+                name_one = #{nameOne},
+            </if>
+            <if test="nameTwo != null">
+                name_two = #{nameTwo},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_communication WHERE ID = #{id}
+    </delete>
+</mapper>

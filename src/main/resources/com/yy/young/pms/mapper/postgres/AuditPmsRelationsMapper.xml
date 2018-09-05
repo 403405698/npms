@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsRelations">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.stype AS "stype",
+        O.relation AS "relation",
+        O.name AS "name",
+        O.sex AS "sex",
+        O.birthday AS "birthday",
+        O.unit AS "unit",
+        O.tel AS "tel",
+        O.num AS "num",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsRelations" resultType="com.yy.young.pms.model.AuditPmsRelations">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_relations O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="stype != null and stype != ''">
+                AND O.stype = #{stype}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND O.sex = #{sex}
+            </if>
+            <if test="name != null and name != ''">
+                AND O.name LIKE '%${name}%'
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+        </where>
+        ORDER BY O.NUM,O.ID ASC
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsRelations" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_relations O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsRelations">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_relations O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsRelations">
+        INSERT INTO audit_pms_relations(
+            id,
+            user_id,
+            stype,
+            relation,
+            name,
+            sex,
+            birthday,
+            unit,
+            tel,
+            num,
+            item_id,
+            status
+            ,lock_status
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{stype},
+            #{relation},
+            #{name},
+            #{sex},
+            #{birthday},
+            #{unit},
+            #{tel},
+            #{num},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsRelations">
+        UPDATE audit_pms_relations
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="stype != null">
+            stype = #{stype},
+            </if>
+            <if test="relation != null">
+            relation = #{relation},
+            </if>
+            <if test="name != null">
+            name = #{name},
+            </if>
+            <if test="sex != null">
+            sex = #{sex},
+            </if>
+            <if test="birthday != null">
+            birthday = #{birthday},
+            </if>
+            <if test="unit != null">
+            unit = #{unit},
+            </if>
+            <if test="tel != null">
+            tel = #{tel},
+            </if>
+            <if test="num != null">
+            num = #{num},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_relations WHERE ID = #{id}
+    </delete>
+</mapper>

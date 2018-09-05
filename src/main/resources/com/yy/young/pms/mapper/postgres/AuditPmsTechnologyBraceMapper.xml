@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsTechnologyBrace">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.serial_number AS "serialNumber",
+        O.release AS "release",
+        O.achievements_name AS "achievementsName",
+        O.release_dept AS "releaseDept",
+        O.release_name AS "releaseName",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsTechnologyBrace" resultType="com.yy.young.pms.model.AuditPmsTechnologyBrace">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_technology_brace O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="achievementsName != null and achievementsName != ''">
+                AND O.achievements_name LIKE '%${achievementsName}%'
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+        </where>
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsTechnologyBrace" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_technology_brace O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsTechnologyBrace">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_technology_brace O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsTechnologyBrace">
+        INSERT INTO audit_pms_technology_brace(
+            id,
+            user_id,
+            serial_number,
+            release,
+            achievements_name,
+            release_dept,
+            release_name,
+            item_id,
+            status
+            ,lock_status
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{serialNumber},
+            #{release},
+            #{achievementsName},
+            #{releaseDept},
+            #{releaseName},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsTechnologyBrace">
+        UPDATE audit_pms_technology_brace
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+            serial_number = #{serialNumber},
+            </if>
+            <if test="release != null">
+            release = #{release},
+            </if>
+            <if test="achievementsName != null">
+            achievements_name = #{achievementsName},
+            </if>
+            <if test="releaseDept != null">
+            release_dept = #{releaseDept},
+            </if>
+            <if test="releaseName != null">
+            release_name = #{releaseName},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_technology_brace WHERE ID = #{id}
+    </delete>
+</mapper>

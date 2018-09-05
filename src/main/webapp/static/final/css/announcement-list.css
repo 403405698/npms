@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+a:hover {
+    color: #4a4a4a;
+}
+
+.container {
+    width: calc(100% - 60px);
+    margin: 20px 32px 33px 22px;
+    background: #fff;
+    min-height: 100%;
+    height: auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear:after {
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0;
+    content: "";
+}
+
+.zoom {
+    zoom: 1;
+}
+
+.announcement-tit {
+    font-size: 18px;
+    padding: 18px 32px 10px 18px;
+    border-bottom: 1px solid #dadada;
+}
+
+.announcement-tit span {
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 20px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.prompt {
+    text-align: center;
+    padding: 24px 0 21px 0;
+}
+
+.prompt span {
+    color: #4ea0ff;
+}
+
+.date {
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 12px;
+    color: #9B9B9B;
+}
+
+.announcement ul {
+    margin: 0 30px;
+    border: 1px solid #dadada;
+}
+
+.announcement ul h2 {
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 14px;
+    color: #000000;
+    letter-spacing: 0;
+}
+
+.announcement ul li {
+    border-bottom: 1px solid #dadada;
+    padding: 16px 24px 20px 24px;
+}
+
+.announcement ul li:hover {
+    background: #EFF3F6;
+    /* border: 1px solid #E9E9E9; */
+}
+
+.announcement ul li:last-child {
+    border: none;
+}
+
+.announcement ul li a {
+    width: 80%;
+}
+
+.announcement ul li a p {
+    margin-top: 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 12px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.announcement-content {
+    padding: 30px;
+    padding-bottom: 200px;
+}
+
+.announcement-content h2 {
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 18px;
+    color: #000000;
+    letter-spacing: 0;
+}
+
+.announcement-content p.sm-tit {
+    margin-top: 6px;
+    color: #4a4a4a;
+    text-indent: 0;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 12px;
+    color: #4A4A4A;
+    letter-spacing: 0.5px;
+}
+
+.announcement-content p .person {
+    color: #4ea0ff;
+}
+
+.announcement-content p {
+    text-indent: 2em;
+    margin-top: 20px;
+    width: 80%;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 14px;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: 24px;
+}

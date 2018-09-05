@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.work">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.start_time AS "startTime"
+        ,O.stop_time AS "stopTime"
+        ,O.work_company AS "workCompany"
+        ,O.work_dept AS "workDept"
+        ,O.post AS "post"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+        ,O.content AS "content"
+        ,O.order_num AS "orderNum"
+        ,O.collect_status AS "collectStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getWorkList" parameterType="com.yy.young.pms.model.Work" resultType="com.yy.young.pms.model.Work">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_work O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="workCompany != null and workCompany != ''">
+                AND O.work_company LIKE '%${workCompany}%'
+            </if>
+            <if test="content != null">
+                AND O.content  LIKE '%${content}%'
+            </if>
+            <choose>
+                <when test="collectStatus != null">
+                    AND O.collect_status = #{collectStatus}
+                </when>
+                <otherwise>
+                    AND (O.collect_status != 1 OR  O.collect_status IS NULL)
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY O.order_num,O.start_time,O.id ASC
+/*        ORDER BY O.start_time DESC*/
+    </select>
+    <!--根据编号查询-->
+    <select id="getWorkById" resultType="com.yy.young.pms.model.Work">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_work O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.Work">
+        INSERT INTO pms_work(
+        id
+        ,user_id
+        ,start_time
+        ,stop_time
+        ,work_company
+        ,work_dept
+        ,post
+        ,status
+        ,lock_status
+        ,content
+        ,order_num
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{startTime}
+        ,#{stopTime}
+        ,#{workCompany}
+        ,#{workDept}
+        ,#{post}
+        ,#{status}
+        ,#{lockStatus}
+        ,#{content}
+        ,#{orderNum}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.Work">
+        UPDATE pms_work
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime},
+            </if>
+            <if test="workCompany != null">
+                work_company = #{workCompany},
+            </if>
+            <if test="workDept != null">
+                work_dept = #{workDept},
+            </if>
+            <if test="post != null">
+                post = #{post},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="orderNum != null">
+                order_num = #{orderNum},
+            </if>
+            <if test="collectStatus != null">
+                collect_status = #{collectStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_work WHERE ID = #{id}
+    </delete>
+</mapper>

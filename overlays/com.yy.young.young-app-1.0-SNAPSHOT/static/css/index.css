@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+.font-12{
+    font-size: 12px;
+}
+.font-14{
+    font-size: 14px;
+}
+.font-16{
+    font-size: 16px;
+}
+.font-18{
+    font-size: 18px;
+}
+.font-20{
+    font-size: 20px;
+}
+.font-22{
+    font-size: 22px;
+}
+.font-24{
+    font-size: 24px;
+}
+.bg-head{ /*顶部背景色*/
+    background: #4E97D9;
+}
+.bg-left{ /*左侧背景*/
+    background-color: #263238;
+}
+.bg-right{ /*右侧背景*/
+    background-color: #F1F4F5;
+}
+html,body,.layout-table{
+    height: 100%; /*保证表格高度为100%*/
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+.layout-table{
+    table-layout: fixed;
+    width: 100%;
+    background: #ffffff;
+}
+.layout-table-td-head{
+    height: 60px; /*顶部为60px*/
+    line-height: 60px;
+    color: white;
+    overflow: hidden;
+}
+.head-bar{ /*顶部div*/
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.head-bar::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.logo-bar{ /*网站logo和标题区域*/
+    width: auto;
+    height: 100%;
+    padding-left: 20px;
+    float: left;
+}
+.head-tools-bar{
+    float: right;
+}
+.tools-ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+.tools-ul li{
+    padding: 0px;
+    margin: 0px;
+    float: left;
+    width: 44px;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+.tools-ul li:hover{
+    background-color: #4688C3;
+}
+.layout-table-body{ /*主体区域table*/
+    width: 100%;
+    height: 100%;
+}
+.body-td-left{
+    width: 220px; /*左侧栏的宽度为220px*/
+    height: 100%; /*保证在firefox中.body-left-bar的高度为100%*/
+}
+.body-left-bar{ /*左侧div*/
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #D4D7D8;
+    overflow-x: hidden;
+    overflow-y: auto; /*菜单栏滚动条*/
+}
+.young-nav-container{ /*菜单栏容器*/
+    width: 220px;
+    /*padding: 0px 20px;*/
+    background-color: #242F35;
+    box-sizing: border-box;
+}
+.young-nav-unit{ /*导航单元,一个完整的导航单元包含导航标题和导航子节点(如果有的话)*/
+    min-height: 36px;
+    line-height: 36px;
+    width: 100%;
+}
+.young-nav-tit{ /*导航标题(包括图标和箭头)*/
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+.young-nav-tit:hover{
+    background-color: #283339;
+}
+.young-nav-tit::after{ /*清除浮动*/
+    content: '';
+    display: block;
+    clear: both;
+}
+.young-nav-icon{/*菜单图标*/
+    float: left;
+    width: 20px;
+}
+.young-nav-name{/*菜单名字*/
+    cursor: default;
+}
+.young-nav-handle{ /*菜单展开收缩图标*/
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 30px;
+}
+.young-nav-child{
+    /*display: none;*/
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+.child-open{
+    display: block;
+}
+.child-close{
+    display: none;
+}
+.body-td-right{
+    height: 100%; /*保证在firefox中.body-right-bar的高度为100%*/
+}
+.body-right-bar{ /*右侧div*/
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /*隐藏iframe莫名其妙高出来一丢丢*/
+    position: relative;
+    border-left: #E4EAEC solid 1px;
+}
+.young-nav-crumbs{ /*面包屑*/
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 32px; /*与.main-iframe的padding-top属性配合使用*/
+    line-height: 32px;
+    text-indent: 12px;
+    background-color: #ffffff;
+    border-bottom: #E4EAEC solid 1px;
+    color: #333333;
+}
+.main-iframe{
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 32px 0px 32px 0px;
+    margin: 0px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+.bottom-info{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 32px; /*与.main-iframe的padding-bottom属性配合使用*/
+    line-height: 32px;
+    text-indent: 12px;
+    background-color: #ffffff;
+    border-top: #E4EAEC solid 1px;
+    color: #333333;
+}

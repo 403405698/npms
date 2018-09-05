@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditRecordBaseinfo">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.field_key AS "fieldKey",
+        O.field_val AS "fieldVal",
+        O.user_id AS "userId",
+        O.audit_status AS "auditStatus",
+        O.lock_status AS "lockStatus",
+        O.item_id AS "itemId"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditRecordBaseinfo" resultType="com.yy.young.pms.model.AuditRecordBaseinfo">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_record_baseinfo O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="fieldKey != null and fieldKey != ''">
+                AND O.field_key = #{fieldKey}
+            </if>
+            <if test="fieldVal != null and fieldVal != ''">
+                AND O.field_val = #{fieldVal}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="auditStatus != null and auditStatus != ''">
+                AND O.audit_status = #{auditStatus}
+            </if>
+            <if test="lockStatus != null and lockStatus != ''">
+                AND O.lock_status = #{lockStatus}
+            </if>
+            <if test="itemId != null and itemId != ''">
+                AND O.item_id = #{itemId}
+            </if>
+        </where>
+        ORDER BY O.item_id DESC
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditRecordBaseinfo" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_record_baseinfo O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditRecordBaseinfo">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_record_baseinfo O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditRecordBaseinfo">
+        INSERT INTO audit_record_baseinfo(
+            id,
+            field_key,
+            field_val,
+            user_id,
+            audit_status,
+            lock_status
+            ,item_id
+        ) VALUES(
+            #{id},
+            #{fieldKey},
+            #{fieldVal},
+            #{userId},
+            #{auditStatus},
+            #{lockStatus}
+            ,#{itemId}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditRecordBaseinfo">
+        UPDATE audit_record_baseinfo
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="fieldKey != null">
+            field_key = #{fieldKey},
+            </if>
+            <if test="fieldVal != null">
+            field_val = #{fieldVal},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="auditStatus != null">
+            audit_status = #{auditStatus},
+            </if>
+            <if test="lockStatus != null">
+            lock_status = #{lockStatus},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_record_baseinfo WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsEducation">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.start_time AS "startTime",
+        O.stop_time AS "stopTime",
+        O.university_name AS "universityName",
+        O.professional_name AS "professionalName",
+        O.degree AS "degree",
+        O.education AS "education",
+        O.culture_mode AS "cultureMode",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+        ,O.content AS "content"
+        ,O.order_num AS "orderNum"
+        ,O.collect_status AS "collectStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+    SELECT
+    <include refid="searchCol"></include>
+    FROM audit_pms_education O
+    <include refid="joinSql"></include>
+    <where>
+        <if test="id != null and id != ''">
+            AND O.ID = #{id}
+        </if>
+        <if test="userId != null and userId != ''">
+            AND O.user_id = #{userId}
+        </if>
+        <if test="universityName != null and universityName != ''">
+            AND O.university_name LIKE '%${universityName}%'
+        </if>
+        <if test="professionalName != null and professionalName != ''">
+            AND O.professional_name LIKE '%${professionalName}%'
+        </if>
+        <if test="status != null">
+            AND O.status = #{status}
+        </if>
+        <if test="content != null">
+            AND O.content  LIKE '%${content}%'
+        </if>
+        <choose>
+            <when test="collectStatus != null">
+                AND O.collect_status = #{collectStatus}
+            </when>
+            <otherwise>
+                AND (O.collect_status != 1 OR  O.collect_status IS NULL)
+            </otherwise>
+        </choose>
+    </where>
+        ORDER BY O.order_num,O.start_time,O.id ASC
+</select>
+
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_education O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsEducation">
+        INSERT INTO audit_pms_education(
+            id,
+            user_id,
+            start_time,
+            stop_time,
+            university_name,
+            professional_name,
+            degree,
+            education,
+            culture_mode,
+            item_id,
+            status
+            ,lock_status
+            ,content
+            ,order_num
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{startTime},
+            #{stopTime},
+            #{universityName},
+            #{professionalName},
+            #{degree},
+            #{education},
+            #{cultureMode},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+            ,#{content}
+            ,#{orderNum}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsEducation">
+        UPDATE audit_pms_education
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="startTime != null">
+            start_time = #{startTime},
+            </if>
+            <if test="stopTime != null">
+            stop_time = #{stopTime},
+            </if>
+            <if test="universityName != null">
+            university_name = #{universityName},
+            </if>
+            <if test="professionalName != null">
+            professional_name = #{professionalName},
+            </if>
+            <if test="degree != null">
+            degree = #{degree},
+            </if>
+            <if test="education != null">
+            education = #{education},
+            </if>
+            <if test="cultureMode != null">
+            culture_mode = #{cultureMode},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="orderNum != null">
+                order_num = #{orderNum},
+            </if>
+            <if test="collectStatus != null">
+                collect_status = #{collectStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_education WHERE ID = #{id}
+    </delete>
+</mapper>

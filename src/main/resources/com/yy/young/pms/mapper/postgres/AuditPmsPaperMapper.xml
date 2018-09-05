@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsPaper">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.serial_number AS "serialNumber",
+        O.years AS "years",
+        O.title AS "title",
+        O.periodical_name AS "periodicalName",
+        O.volume AS "volume",
+        O.page AS "page",
+        O.periodical_type AS "periodicalType",
+        O.ranking AS "ranking",
+        O.influence_factor AS "influenceFactor",
+        O.his_citation AS "hisCitation",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsPaper" resultType="com.yy.young.pms.model.AuditPmsPaper">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_paper O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="title != null and title != ''">
+                AND O.title LIKE '%${title}%'
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+        </where>
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsPaper" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_paper O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsPaper">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_paper O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsPaper">
+        INSERT INTO audit_pms_paper(
+            id,
+            user_id,
+            serial_number,
+            years,
+            title,
+            periodical_name,
+            volume,
+            page,
+            periodical_type,
+            ranking,
+            influence_factor,
+            his_citation,
+            item_id,
+            status
+            ,lock_status
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{serialNumber},
+            #{years},
+            #{title},
+            #{periodicalName},
+            #{volume},
+            #{page},
+            #{periodicalType},
+            #{ranking},
+            #{influenceFactor},
+            #{hisCitation},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsPaper">
+        UPDATE audit_pms_paper
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+            serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+            years = #{years},
+            </if>
+            <if test="title != null">
+            title = #{title},
+            </if>
+            <if test="periodicalName != null">
+            periodical_name = #{periodicalName},
+            </if>
+            <if test="volume != null">
+            volume = #{volume},
+            </if>
+            <if test="page != null">
+            page = #{page},
+            </if>
+            <if test="periodicalType != null">
+            periodical_type = #{periodicalType},
+            </if>
+            <if test="ranking != null">
+            ranking = #{ranking},
+            </if>
+            <if test="influenceFactor != null">
+            influence_factor = #{influenceFactor},
+            </if>
+            <if test="hisCitation != null">
+            his_citation = #{hisCitation},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_paper WHERE ID = #{id}
+    </delete>
+</mapper>

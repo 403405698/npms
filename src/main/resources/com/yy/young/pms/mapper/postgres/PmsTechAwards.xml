@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsTechAwards">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.years AS "years"
+        ,O.award_type AS "awardType"
+        ,O.award_level AS "awardLevel"
+        ,O.award_win_project_name AS "awardWinProjectName"
+        ,O.award_win_project_level AS "awardWinProjectLevel"
+        ,O.ranking AS "ranking"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPmsTechAwardsList" parameterType="com.yy.young.pms.model.PmsTechAwards" resultType="com.yy.young.pms.model.PmsTechAwards">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_tech_awards O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="awardWinProjectName != null and awardWinProjectName != ''">
+                AND O.award_win_project_name LIKE '%${awardWinProjectName}%'
+            </if>
+        </where>
+        ORDER BY O.years DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsTechAwardsById" resultType="com.yy.young.pms.model.PmsTechAwards">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_tech_awards O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsTechAwards">
+        INSERT INTO pms_tech_awards(
+        id
+        ,user_id
+        ,serial_number
+        ,years
+        ,award_type
+        ,award_level
+        ,award_win_project_name
+        ,award_win_project_level
+        ,ranking
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{years}
+        ,#{awardType}
+        ,#{awardLevel}
+        ,#{awardWinProjectName}
+        ,#{awardWinProjectLevel}
+        ,#{ranking}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsTechAwards">
+        UPDATE pms_tech_awards
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="awardType != null">
+                award_type = #{awardType},
+            </if>
+            <if test="awardLevel != null">
+                award_level = #{awardLevel},
+            </if>
+            <if test="awardWinProjectName != null">
+                award_win_project_name = #{awardWinProjectName},
+            </if>
+            <if test="awardWinProjectLevel != null">
+                award_win_project_level = #{awardWinProjectLevel},
+            </if>
+            <if test="ranking != null">
+                ranking = #{ranking},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_tech_awards WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/context
+          				http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          				http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
+	<!-- 两种数据源配置方式二选一,1.tomcat容器JNDI配置;2.引用外部配置文件配置; -->
+	
+	<!--   tomcat 配置 数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/coa</value>
+		</property>
+	</bean> -->
+
+	<!-- 引入配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jdbc.properties" />
+	</bean>
+
+	<!-- .property文件数据源 -->
+	<!--DBCP数据源-->
+	<!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		&lt;!&ndash; 初始化连接大小 &ndash;&gt;
+		<property name="initialSize" value="${initialSize}"/>
+		&lt;!&ndash; 连接池最大数量 &ndash;&gt;
+		<property name="maxActive" value="${maxActive}"/>
+		&lt;!&ndash; 连接池最大空闲 &ndash;&gt;
+		<property name="maxIdle" value="${maxIdle}"/>
+		&lt;!&ndash; 连接池最小空闲 &ndash;&gt;
+		<property name="minIdle" value="${minIdle}"/>
+		&lt;!&ndash; 获取连接最大等待时间 &ndash;&gt;
+		<property name="maxWait" value="${maxWait}"/>
+		&lt;!&ndash;验证连接是否有效,避免服务端和客户端状态不一致导致异常出现&ndash;&gt;
+		<property name="validationQuery" value="${testSql}"/>
+		<property name="testWhileIdle" value="true"/>
+	</bean>-->
+	<!--Druid数据源-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close" init-method="init">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${initialSize}"/>
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="${maxActive}"/>
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${minIdle}"/>
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${maxWait}"/>
+		<!--验证连接是否有效,避免服务端和客户端状态不一致导致异常出现-->
+		<property name="validationQuery" value="${testSql}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+		<property name="filters" value="stat" />
+	</bean>
+
+	<bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close" init-method="init">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${urlAudit}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${initialSize}"/>
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="${maxActive}"/>
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${minIdle}"/>
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${maxWait}"/>
+		<!--验证连接是否有效,避免服务端和客户端状态不一致导致异常出现-->
+		<property name="validationQuery" value="${testSql}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+		<property name="filters" value="stat" />
+	</bean>
+
+	<bean id="dynamicDataSource" class="com.yy.young.pms.util.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="ds1" value-ref="dataSource"/>
+				<entry key="ds2" value-ref="dataSource2"/>
+			</map>
+		</property>
+		<!--默认数据源-->
+		<property name="defaultTargetDataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- 新增测试start -->
+<!--	<bean id="vendorProperties"
+		  class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+				<prop key="DB2">db2</prop>
+				<prop key="PostgreSQL">postgresql</prop>
+				<prop key="Adaptive Server Enterprise">sybase</prop>
+				<prop key="SQL Server">sqlserver</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="vendorProperties" />
+	</bean>-->
+	<!-- 新增测试end -->
+
+	<!-- 事务处理理解:当切入点发生通知中定义的事件后(例如发生异常),将触发事务进行通知中设置好的操作 -->
+	<!-- 定义事务 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!--<property name="dataSource" ref="dataSource"></property>-->
+		<property name="dataSource" ref="dynamicDataSource"></property>
+	</bean>
+
+	<bean id="dataSourceExchange" class="com.yy.young.pms.util.DataSourceExchange"/>
+	<aop:config>
+		<aop:aspect ref="dataSourceExchange">
+			<!--<aop:pointcut id="dataSourcePointcut" expression="execution(* com.yy.young.*.service.*.*(..))"/>-->
+			<!--<aop:pointcut id="dataSourcePointcut" expression="execution( * com.yy.young.*.service.impl.*.*(..))"/>-->
+			<aop:pointcut id="dataSourcePointcut" expression="execution(* com.yy.young..*.*(..))"/>
+			<aop:before pointcut-ref="dataSourcePointcut" method="before"/>
+			<aop:after pointcut-ref="dataSourcePointcut" method="after"/>
+		</aop:aspect>
+	</aop:config>
+
+	<!-- 配置切入点,将切入点和通知关联起来 -->
+	<aop:config>
+		<!-- 切入点 -->
+		<aop:pointcut expression="execution( * com.yy.young.*.service.impl.*.*(..))" id="servicePoint"/>
+
+		<!-- 将切入点和通知进行关联 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePoint"/>
+
+	</aop:config>
+	<!-- 定义通知,将通知与事务关联起来(通过transaction-manager) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- 在这对切入点中的方法作事务配置,propagation="REQUIRED"表示存在事务则用当前事务,不存在则新建事务使用(使用切入点的事务,切入点没有事务则新建事务,保证只存在一个事务) -->
+			<!-- 查询操作,只读,propagation="SUPPORTS"表示存在事务则用当前事务,不存在则不用(切入点没有事务,那么调用的其他方法也不用事务) -->
+			<!--<tx:method name="get*"  read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="list*"  read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="select*"  read-only="true" propagation="SUPPORTS"/>-->
+			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+</beans>

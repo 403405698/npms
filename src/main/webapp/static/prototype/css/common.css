@@ -1,0 +1,152 @@
+.select {
+    width: 262px;
+    background: #3693FF;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    padding: 0 10px;
+    font-size: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.select *,
+.select-content * {
+    cursor: pointer !important;
+}
+
+.select .right {
+    color: #ede038;
+}
+
+.select i {
+    color: #fff !important;
+}
+
+
+/* .select .baifen {
+    position: absolute;
+    right: 30px;
+} */
+
+.select .right .layui-icon {
+    transition: all .6s;
+    color: #fff;
+}
+
+.select.active .layui-icon {
+    transform: rotateX(180deg);
+    transition: all .6s;
+}
+
+.layui-inline {
+    position: relative;
+}
+
+.select-content {
+    border: 1px solid #dadada;
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.select-content ul {
+    height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.select-content li {
+    height: 50px;
+    line-height: 50px;
+    color: #4a4a4a;
+    padding: 0 10px;
+    font-size: 12px;
+    position: relative;
+    border-bottom: 1px solid #dadada;
+    width: 242px;
+    padding-right: 20px;
+}
+
+.select-content a {
+    display: block;
+    height: 100%;
+}
+
+.select-content li:hover {
+    background: #E8F3FF;
+}
+
+.select-content li:last-child {
+    border-bottom: none;
+}
+
+.select-content .baifen {
+    color: red;
+    position: absolute;
+    right: 10px;
+}
+
+.select-content .txt {
+    color: #9B9B9B;
+    position: absolute;
+    right: 40px;
+}
+
+.select-content .opt {
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+
+/* pages */
+
+#pages {
+    padding: 30px 0;
+    float: right;
+    width: 100%;
+}
+
+#pages .layui-btn-primary {
+    border: 1px solid #378CEF !important;
+    background-color: #fff !important;
+    color: #378CEF !important;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 4px;
+    width: 64px;
+    text-align: center;
+    padding: 0;
+    float: right;
+    margin-left: 10px;
+}
+
+#pages .layui-btn-normal {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 24px;
+    background: #378CEF;
+    width: 100px;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 14px;
+}
+
+tr.pass {
+    /*通过审核*/
+    color: #1aad19 !important;
+}
+
+tr.nopass {
+    /*不通过审核*/
+    color: #FF6600 !important;
+}
+
+tr.no-reviewe {
+    /*不审核*/
+    color: #378CEF !important;
+}

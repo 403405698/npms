@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.statistic">
+    <!--查询人才梯队建设-->
+    <select id="getTalentEchelon" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and  pp.birth &gt;#{attr1} AND pp.birth &lt;=#{attr2}
+        <if test="attr10 != null and attr10 != ''">
+            AND  ppo.deptNames LIKE '%${attr10}%'
+        </if>
+        <if test="zc != null and zc != ''">
+            AND  pp.administrative_level IN
+            <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                #{zcItem}
+            </foreach>
+
+        </if>
+
+        <if test="zw != null and zw != ''">
+            AND  pp.technical_position IN
+            <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                #{zwItem}
+            </foreach>
+        </if>
+
+        <if test="personTypeArr != null and personTypeArr != ''">
+            AND  pp.person_type IN
+            <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                #{personTypeItem}
+            </foreach>
+        </if>
+
+
+    </select>
+
+    <!--查询研究领域情况-->
+    <select id="getResearchField" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and pp.research_field =#{attr2}
+        <if test="attr10 != null and attr10 != ''">
+        AND  ppo.deptNames  LIKE '%${attr10}%'
+    </if>
+    <if test="zc != null and zc != ''">
+        AND  pp.administrative_level IN
+        <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+            #{zcItem}
+        </foreach>
+
+    </if>
+
+    <if test="zw != null and zw != ''">
+        AND  pp.technical_position IN
+        <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+            #{zwItem}
+        </foreach>
+    </if>
+    <if test="personTypeArr != null and personTypeArr != ''">
+        AND  pp.person_type IN
+        <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+            #{personTypeItem}
+        </foreach>
+    </if>
+
+
+    </select>
+
+    <!--查询男女比例情况-->
+    <select id="getMenAndWomen" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where ( pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and pp.sex =#{attr2}
+         <if test="attr10 != null and attr10 != ''">
+             AND   ppo.deptNames  LIKE '%${attr10}%'
+         </if>
+         <if test="zc != null and zc != ''">
+             AND  pp.administrative_level IN
+             <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                 #{zcItem}
+             </foreach>
+
+         </if>
+
+         <if test="zw != null and zw != ''">
+             AND  pp.technical_position IN
+             <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                 #{zwItem}
+             </foreach>
+         </if>
+         <if test="personTypeArr != null and personTypeArr != ''">
+             AND  pp.person_type IN
+             <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                 #{personTypeItem}
+             </foreach>
+         </if>
+
+    </select>
+
+    <!--查询学历分布情况-->
+    <select id="getEducationSpread" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and pp.highest_education =#{attr2}
+        <if test="attr10 != null and attr10 != ''">
+             AND  ppo.deptNames  LIKE '%${attr10}%'
+         </if>
+         <if test="zc != null and zc != ''">
+             AND  pp.administrative_level IN
+             <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                 #{zcItem}
+             </foreach>
+
+         </if>
+
+         <if test="zw != null and zw != ''">
+             AND  pp.technical_position IN
+             <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                 #{zwItem}
+             </foreach>
+         </if>
+         <if test="personTypeArr != null and personTypeArr != ''">
+             AND  pp.person_type IN
+             <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                 #{personTypeItem}
+             </foreach>
+         </if>
+    </select>
+
+    <!--查询国外经历情况-->
+    <select id="getForeignExperience" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and pp.overseas_study_experience =#{attr2}
+          <if test="attr10 != null and attr10 != ''">
+              AND    ppo.deptNames  LIKE '%${attr10}%'
+          </if>
+          <if test="zc != null and zc != ''">
+              AND  pp.administrative_level IN
+              <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                  #{zcItem}
+              </foreach>
+
+          </if>
+
+          <if test="zw != null and zw != ''">
+              AND  pp.technical_position IN
+              <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                  #{zwItem}
+              </foreach>
+          </if>
+          <if test="personTypeArr != null and personTypeArr != ''">
+              AND  pp.person_type IN
+              <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                  #{personTypeItem}
+              </foreach>
+          </if>
+    </select>
+
+    <!--查询工作年限情况-->
+    <select id="getWorkYear" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+        and pp.work_start_time &gt;#{attr1} AND pp.work_start_time &lt;=#{attr2}
+         <if test="attr10 != null and attr10 != ''">
+             AND ppo.deptNames  LIKE '%${attr10}%'
+         </if>
+         <if test="zc != null and zc != ''">
+             AND  pp.administrative_level IN
+             <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                 #{zcItem}
+             </foreach>
+
+         </if>
+
+         <if test="zw != null and zw != ''">
+             AND  pp.technical_position IN
+             <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                 #{zwItem}
+             </foreach>
+         </if>
+         <if test="personTypeArr != null and personTypeArr != ''">
+             AND  pp.person_type IN
+             <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                 #{personTypeItem}
+             </foreach>
+         </if>
+
+    </select>
+
+    <!--查询奖励层次情况-->
+    <select id="getAwardLevel" resultType="com.yy.young.pms.model.Statistic">
+        SELECT COUNT(*) AS attr1 FROM PMS_TECH_AWARDS O WHERE O.AWARD_LEVEL =#{attr2}
+    </select>
+
+    <!--查询系统内所有用户数量-->
+    <select id="getAllUserCount" resultType="com.yy.young.pms.model.Statistic">
+        select count(*)as attr1 from pms_user pp
+        left join (
+        SELECT * FROM
+        (SELECT t2.id,string_agg(whole_name,',')deptNames FROM tb_ums_dept_user t1
+        LEFT JOIN pms_user t2 ON t1.user_id = t2.id
+        LEFT JOIN tb_ums_dept t3  ON  t3.id = t1.dept_id
+        group by t2.id)O ) ppo
+        on ppo.id = pp.id
+        where (pp.trash_flag != '1'  or pp.trash_flag is null)
+        and  pp.user_name NOT IN ('环科院管理员','超级管理员')
+         <if test="attr10 != null and attr10 != ''">
+             AND   ppo.deptNames LIKE '%${attr10}%'
+         </if>
+         <if test="zc != null and zc != ''">
+             AND  pp.administrative_level IN
+             <foreach collection="zc" item="zcItem" index="index" open="(" separator="," close=")">
+                 #{zcItem}
+             </foreach>
+         </if>
+
+         <if test="zw != null and zw != ''">
+             AND  pp.technical_position IN
+             <foreach collection="zw" item="zwItem" index="index" open="(" separator="," close=")">
+                 #{zwItem}
+             </foreach>
+         </if>
+         <if test="personTypeArr != null and personTypeArr != ''">
+             AND  pp.person_type IN
+             <foreach collection="personTypeArr" item="personTypeItem" index="index" open="(" separator="," close=")">
+                 #{personTypeItem}
+             </foreach>
+         </if>
+    </select>
+
+
+
+    <!--统计首页无条件查询系统内所有用户数量-->
+    <select id="getSystemInputCount" resultType="com.yy.young.pms.model.Statistic">
+        SELECT COUNT(*) AS attr1 FROM PMS_USER O WHERE O.user_name NOT IN ('环科院管理员','超级管理员') and (O.trash_flag != '1' or O.trash_flag IS NULL)
+    </select>
+
+
+    <!--查询系统内所有科技奖数量-->
+    <select id="getAllTechAwardsCount" resultType="com.yy.young.pms.model.Statistic">
+        SELECT COUNT(*) AS attr1 FROM PMS_TECH_AWARDS
+    </select>
+
+    <!--查询系统内所有一级部门列表-->
+    <select id="getDeptList" resultType="com.yy.young.pms.model.UserDept">
+        SELECT id AS deptId,name AS deptName,whole_name AS wholeName  FROM TB_UMS_DEPT D
+        <where>
+            <if test="deptLevel != null and deptLevel != ''">
+                D.DEPT_LEVEL = #{deptLevel}
+            </if>
+            <if test="deptName != null and deptName != ''">
+              AND  D.name = #{deptName}
+            </if>
+        </where>
+        ORDER BY D.NUM ASC
+    </select>
+
+    <!--查询数据字典值-->
+    <select id="getDicValue" resultType="com.yy.young.pms.model.PmsDictionary">
+        SELECT id ,dic_value as dicValue  FROM PMS_DICTIONARY WHERE bedic_id = #{bedicId}
+    </select>
+
+
+
+    <!--根据部门编号查询部门全名称-->
+    <select id="getWholeName" resultType="com.yy.young.pms.model.UserDept">
+        SELECT whole_name AS wholeName ,name AS deptName,id AS deptId FROM tb_ums_dept WHERE whole_id = #{wholeId}
+    </select>
+
+
+    <!--根据部门编号查询部门全名称-->
+    <select id="getWholeId" resultType="com.yy.young.pms.model.UserDept">
+        SELECT whole_id AS wholeId ,name AS deptName,id AS deptId FROM tb_ums_dept WHERE id = #{deptId}
+    </select>
+</mapper>

@@ -1,0 +1,76 @@
+/* CSS Document */
+body{ margin:0px; padding:0px;font-size: 12px;overflow:hidden;
+	font-family: "微软雅黑", "Arial", "Verdana", "Helvetica", "宋体", "sans-serif";/* overflow:hidden; */}/* overflow:hidden;*/
+html,body,.index-loyout{ width:100%; height:100%;}
+.index-loyout{table-layout:fixed; background-color:#F3F7F8;overflow:hidden;}
+/* ͷ */
+.index-top-bar{width:100%; height:70px; background-color:#58AFF7; border-bottom:#4B8DC3 solid 1px;border-top:#4B8DC3 solid 1px;overflow-y: hidden;}
+.index-top-bar-div{width:100%; height:100%;}
+.index-top-bar-div::after{content:""; display:block; clear:both;}
+.top-right{ width:auto; height:100%;float:right; padding-right:10px;}
+.top-right ul{ width:auto; height:100%; list-style:none; margin:0px; padding:0px;}
+.top-right ul::after{content:""; display:block; clear:both;}
+.top-right ul li{width:auto; height:100%; overflow:hidden; float:right;}
+.user-head{ width:48px; height:48px; margin:5px 5px 0px 5px; border-radius:50%; border:#FFFFFF solid 1px;
+background:#FFFFFF url("def_head.png") no-repeat center center;overflow:hidden;cursor: pointer;}
+.user-head img{width:100%;height:100%;margin:0px;padding:0px;cursor: pointer;}
+.top-more{width:100%; text-align:center; font-size:16px;cursor: pointer; font-weight:lighter;
+	position: relative;}
+.user-info{width:auto; height:48px;line-height:18px;padding-top:5px; color:#FFFFFF;text-align:center;
+vertical-align:middle;display:table-cell;}/* 垂直居中 */
+.top-left{width:auto;height:100%;color:#FFFFFF; float:left;
+vertical-align:middle;display:table-cell;}
+.top-left::after{content:""; display:block; clear:both;}
+.web-logo{width:50px; height:50px; padding:10px 12px 0px 25px; float:left;
+vertical-align:middle;display:table-cell; font-size:28px; text-align:center;}
+.web-logo img{width:100%;height:100%;margin:0px;padding:0px;cursor: pointer;}/* 图片logo */
+.web-logo i{width:50px;height:50px;cursor: pointer;
+vertical-align:middle;display:table-cell; font-size:28px; text-align:center;}/* 文字型logo */
+.web-name{width:auto;height:100%;float:left;font-size:24px;font-weight:bold;line-height:70px;cursor: pointer;}
+
+.index-body{width:100%; height:100%;}
+.index-loyout-sub{width:100%; height:100%;}/*table-layout:; background-color:; */
+.index-left-bar{width:auto;height:100%;  overflow: hidden;}/*background-color:;*/
+.index-left-bar-div{width:auto; padding-right:0px; height:100%;}
+
+.nav-move-bar{ width:10px; height:100%;/*cursor:w-resize;*/}/*导航拖拽条,用来改变导航栏宽度*/
+
+.index-main-bar{ width:100%; height:100%; }/*background-color:;*/
+.index-main-bar-div{width:calc(100% - 5px); height:calc(100% - 10px);padding:5px 5px 5px 0px;}
+.main-iframe{ width:100%;  height:100%; border:#D6D6D6 solid 1px; /*border-radius:2px;*/}
+
+.navigate-bar{width:242px; height:100%; border-right:#D5D5D5 solid 1px; border-left:#D5D5D5 solid 1px;}
+.navigate-left{ width:50px; height:100%; background-color:#EEEEEE; float:left;}
+.navigate-right{ width:calc(100% - 50px); height:100%; float:right; background-color:#FFFFFF; position:relative; z-index:2;}/*z-index用来盖住左侧的文字区域*/
+.navigate-bar::after{content:""; display:block; clear:both;}
+
+.nav-left-ul{ color:#2E2E2E; font-size:14px; width:49px;height:calc(100% - 37px); border-right:#D5D5D5 solid 1px;list-style:none; margin:0px; padding:37px 0px 0px 0px; text-align:center; position:relative;}
+.nav-left-ul li{ width:135px;/*min-width: 135px;*/ height:40px; line-height:40px; position:relative; z-index:1;overflow: hidden;}
+.nav-left-ul li::after{content:""; display:block; clear:both;}
+.nav-left-ul li i{width:44px; height:100%; display:block; /*float:left;*/position: absolute;left: 0px; line-height:40px;font-size:18px;}
+.nav-left-ul li span{ width:90px; height:100%; display:block; /*float:left;*/position: absolute;left: 45px; line-height:40px; font-size:14px; text-align:left; text-indent:8px;}
+.nav-left-ul li:not(.nav-left-checked){border:#EEEEEE solid; border-width:1px 0px 1px 5px; }
+.nav-left-checked{ background-color:#FFFFFF; border-left:#5093E8 solid 5px; border-top:#D5D5D5 solid 1px; border-bottom:#D5D5D5 solid 1px; border-right:#FFFFFF solid 1px;}
+.nav-left-ul li:hover{ z-index:3; background-color:#FFFFFF; border:#5093E8 solid; border-width:1px 1px 1px 4px; cursor:pointer;}
+
+.nav-title{ width:100%; height:35px; border-bottom:#508DEE solid 3px; text-align:center; line-height:35px; font-weight:bold;}
+.nav-content{ width:100%; height:calc(100% - 38px); background-color:#FFFFFF; overflow-x:hidden;overflow-y:auto; color:#2E2E2E;}
+.nav-right-ul{ width:calc(100% - 26px);height:calc(100% - 14px);overflow-x:hidden;overflow-y:auto; padding:7px 13px; list-style:none; margin:0px;  text-align:left; clear:both;}
+.nav-right-ul li{ width:100%; height:auto; min-height:24px; line-height:24px; border:#FFFFFF solid 1px; /*text-indent:24px; background-image:url(../images/bg_icon.gif); background-repeat:no-repeat; background-position:-115px -160px;*/}
+.nav-right-ul li:not(.nav-sub):hover{ background-color:#F6F6F6; color:#508DEF; border:#E5E5E5 solid 1px;}
+.nav-right-ul li::after{content:""; display:block; clear:both;}
+.nav-sub-ul{ width:100%;height:auto; padding:0px 0px 0px 13px; list-style:none; margin:0px;  text-align:left; clear:both;}/*子菜单ul*/
+.nav-sub-ul::after{content:""; display:block; clear:both;}
+.nav-icon{ width:24px; height:24px; line-height:24px; text-align:center; float:left;}
+.nav-icon i{ width:24px; height:27px; line-height:24px; text-align:center; font-size:16px; display:block; cursor:default;}
+.nav-font{width:calc(100% - 26px); overflow:hidden; height:24px;float:left; line-height:24px; cursor:pointer;}
+.nav-checked:not(.nav-sub){background-color:#F6F6F6; color:#508DEF; border:#E5E5E5 solid 1px;}/*当前选中的菜单样式*/
+
+.nav-sub{ display:none;}/*class=nav-sub的节点属于某节点的子节点,默认隐藏*/
+
+.nav-bottom{width:100%;height:auto; padding:0px; margin:0px;}
+.nav-bottom ul{width:100%;height:auto; padding:0px; list-style:none; margin:0px; background-color:#F7F7F7;}
+.nav-bottom ul li{width:100%; height:35px; line-height:35px; border-top:#DCD9D9 solid 1px; text-align:left;}
+.nav-bottom ul li:hover{ background-color:#EDEDED; cursor:pointer;color:#508DEF;}
+.nav-bottom ul li i{width:24px; height:35px; line-height:35px; text-align:center; padding-left:0px; font-size:16px; display:block; cursor:default; float:left;margin-left: 12px;}
+.nav-bottom-checked{ background-color:#EDEDED;color:#508DEF;}

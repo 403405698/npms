@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsLeaderEvaluation">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.leader_id AS "leaderId"
+        ,O.leader_evaluation AS "leaderEvaluation"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPmsLeaderEvaluationList" parameterType="com.yy.young.pms.model.PmsLeaderEvaluation" resultType="com.yy.young.pms.model.PmsLeaderEvaluation">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_leader_evaluation O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsLeaderEvaluationById" resultType="com.yy.young.pms.model.PmsLeaderEvaluation">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_leader_evaluation O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsLeaderEvaluation">
+        INSERT INTO pms_leader_evaluation(
+        id
+        ,user_id
+        ,leader_id
+        ,leader_evaluation
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{leaderId}
+        ,#{leaderEvaluation}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsLeaderEvaluation">
+        UPDATE pms_leader_evaluation
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="leaderId != null">
+                leader_id = #{leaderId},
+            </if>
+            <if test="leaderEvaluation != null">
+                leader_evaluation = #{leaderEvaluation},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_leader_evaluation WHERE ID = #{id}
+    </delete>
+</mapper>

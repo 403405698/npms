@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.publish">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.years AS "years"
+        ,O.book_name AS "bookName"
+        ,O.press AS "press"
+        ,O.work_type AS "workType"
+        ,O.ranking AS "ranking"
+        ,O.write_chapter AS "writeChapter"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPublishList" parameterType="com.yy.young.pms.model.Publish" resultType="com.yy.young.pms.model.Publish">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_publish O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="bookName != null and bookName != ''">
+                AND O.book_name LIKE '%${bookName}%'
+            </if>
+        </where>
+        ORDER BY O.years DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getPublishById" resultType="com.yy.young.pms.model.Publish">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_publish O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.Publish">
+        INSERT INTO pms_publish(
+        id
+        ,user_id
+        ,serial_number
+        ,years
+        ,book_name
+        ,press
+        ,work_type
+        ,ranking
+        ,write_chapter
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{years}
+        ,#{bookName}
+        ,#{press}
+        ,#{workType}
+        ,#{ranking}
+        ,#{writeChapter}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.Publish">
+        UPDATE pms_publish
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="bookName != null">
+                book_name = #{bookName},
+            </if>
+            <if test="press != null">
+                press = #{press},
+            </if>
+            <if test="workType != null">
+                work_type = #{workType},
+            </if>
+            <if test="ranking != null">
+                ranking = #{ranking},
+            </if>
+            <if test="writeChapter != null">
+                write_chapter = #{writeChapter},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_publish WHERE ID = #{id}
+    </delete>
+</mapper>

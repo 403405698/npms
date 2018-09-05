@@ -1,0 +1,55 @@
+body {
+    background: #fff;
+}
+
+.header .right a {
+    background: #3693FF;
+    border: 1px solid #3693FF;
+    border-radius: 100px;
+    width: 120px;
+    height: 42px;
+    line-height: 28px;
+    outline: none;
+    margin-top: -3px;
+    color: #fff;
+}
+
+.header {
+    padding-right: 32px;
+}
+
+.aboutUs-content {
+    padding-bottom: 52px;
+    padding-top: 52px;
+    background: #f2f2f0;
+}
+
+.aboutUs-content-wrap {
+    width: 809px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px 30px 30px;
+}
+
+.aboutUs-content-wrap h3 {
+    /* margin-top: 61px; */
+    margin-bottom: 43px;
+    font-family: PingFangSC-Light;
+    font-size: 36px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.aboutUs-content-wrap p {
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #4A4A4A;
+    letter-spacing: 0.5px;
+    line-height: 30px;
+}
+
+.aboutUs-content-wrap p.mar {
+    margin-top: 30px;
+    display: block;
+}

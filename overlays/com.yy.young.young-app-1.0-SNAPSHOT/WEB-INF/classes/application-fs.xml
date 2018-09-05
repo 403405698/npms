@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- fs配置 -->
+	<bean id="fsConfig" class="com.yy.young.fs.util.FsConfig">
+		<!--name参数的写法和类中的变量名是有差别的,需要和参数的set方法对应-->
+		<property name="rootPathAtLinux" value="/home/young/fs"></property>
+		<property name="rootPathAtWindows" value="C:\young\fs"></property>
+	</bean>
+	
+</beans>

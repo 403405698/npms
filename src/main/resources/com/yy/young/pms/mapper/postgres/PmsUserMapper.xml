@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsUser">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.user_name AS "userName"
+        ,O.old_name AS "oldName"
+        ,O.sex AS "sex"
+        ,O.birth AS "birth"
+        ,O.nation AS "nation"
+        ,O.place_of_origin AS "placeOfOrigin"
+        ,O.place_of_birth AS "placeOfBirth"
+        ,O.work_start_time AS "workStartTime"
+        ,O.political_outlook AS "politicalOutlook"
+        ,O.join_party_time AS "joinPartyTime"
+        ,O.technical_position AS "technicalPosition"
+        ,O.get_time AS "getTime"
+        ,O.appointment_time AS "appointmentTime"
+        ,O.technical_level AS "technicalLevel"
+        ,O.administrative_duty AS "administrativeDuty"
+        ,O.tenure_time AS "tenureTime"
+        ,O.administrative_level AS "administrativeLevel"
+        ,O.research_field AS "researchField"
+        ,O.specialty AS "specialty"
+        ,O.highest_education AS "highestEducation"
+        ,O.highest_degree AS "highestDegree"
+        ,O.id_card AS "idCard"
+        ,O.overseas_study_experience AS "overseasStudyExperience"
+        ,O.english_level AS "englishLevel"
+        ,O.photo_address AS "photoAddress"
+        ,O.remark AS "remark"
+        ,O.first_education AS "firstEducation"
+        ,O.job_education AS "jobEducation"
+        ,O.person_type AS "personType"
+        ,O.num AS "num"
+        ,O.trash_flag AS "trashFlag"
+        ,O.first_degree AS "firstDegree"
+        ,O.station AS "station"
+        ,O.take_work AS "takeWork"
+        ,O.research_field_detail AS "researchFieldDetail"
+        ,O.job_degree AS "jobDegree"
+        ,O.temp_work_experience AS "tempWorkExperience"
+        ,O.to_there_time AS "toThereTime"
+        ,O.remark_modify_time AS "remarkModifyTime"
+        ,(SELECT string_agg(DE.NAME,',') FROM TB_UMS_DEPT_USER DU LEFT JOIN TB_UMS_DEPT DE ON DU.DEPT_ID=DE.ID WHERE DU.USER_ID=O.ID) AS "deptNames"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!--<if test="deptIds != null and deptIds != ''">
+                AND (SELECT string_agg(DE.ID,',') FROM TB_UMS_DEPT_USER DU LEFT JOIN TB_UMS_DEPT DE ON DU.DEPT_ID=DE.ID WHERE DU.USER_ID=O.ID) like '%${deptIds}%'
+            </if>-->
+    <!-- 查询 -->
+    <select id="getPmsUserList" parameterType="com.yy.young.pms.model.PmsUser" resultType="com.yy.young.pms.model.PmsUser">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_user O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="deptList != null">
+                O.ID IN (
+                SELECT DISTINCT DU.USER_ID FROM tb_ums_dept_user DU WHERE DU.DEPT_ID IN
+                <foreach collection="deptList" item="item" separator="," open="(" close=")">
+                    #{item.deptId}
+                </foreach>
+                )
+            </if>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND O.user_name like '%${userName}%'
+            </if>
+            <if test="personType != null and personType != ''">
+                AND O.person_type = #{personType}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND O.sex = #{sex}
+            </if>
+            <if test="nation != null and nation != ''">
+                AND O.nation = #{nation}
+            </if>
+            <if test="highestEducation != null and highestEducation != ''">
+                AND O.highest_education = #{highestEducation}
+            </if>
+            <if test="highestDegree != null and highestDegree != ''">
+                AND O.highest_degree = #{highestDegree}
+            </if>
+            <if test="technicalPosition != null and technicalPosition != ''">
+                AND O.technical_position = #{technicalPosition}
+            </if>
+            <if test="administrativeLevel != null and administrativeLevel != ''">
+                AND O.administrative_level IN (${administrativeLevel})
+            </if>
+            <if test="firstEducation != null and firstEducation != ''">
+                AND O.first_education = #{firstEducation}
+            </if>
+            <if test="firstDegree != null and firstDegree != ''">
+                AND O.first_degree = #{firstDegree}
+            </if>
+            <if test="jobEducation != null and jobEducation != ''">
+                AND O.job_education = #{jobEducation}
+            </if>
+            <if test="jobDegree != null and jobDegree != ''">
+                AND O.job_degree = #{jobDegree}
+            </if>
+            <if test="tempWorkExperience != null and tempWorkExperience != ''">
+                AND O.temp_work_experience = #{tempWorkExperience}
+            </if>
+            <if test="administrativeDuty != null and administrativeDuty != ''">
+                AND O.administrative_duty LIKE '%${administrativeDuty}%'
+            </if>
+            <choose>
+                <when test="trashFlag != null and trashFlag != ''">
+                    AND O.trash_flag = #{trashFlag}
+                </when>
+                <otherwise>
+                    AND (O.trash_flag != '1' OR  O.trash_flag IS NULL)
+                </otherwise>
+            </choose>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY O.${orderBy} ${orderType}
+            </when>
+            <otherwise>
+                ORDER BY O.num ASC,O.id ASC
+            </otherwise>
+        </choose>
+    </select>
+    <!--管辖内的人员查询-->
+    <select id="getPmsUserListInDept" parameterType="com.yy.young.pms.model.PmsUser" resultType="com.yy.young.pms.model.PmsUser">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_user O
+        <include refid="joinSql"></include>
+        <where>
+            O.ID IN (
+            SELECT DISTINCT DU.USER_ID FROM tb_ums_dept_user DU WHERE DU.DEPT_ID IN
+            <foreach collection="deptList" item="item" separator="," open="(" close=")">
+                #{item.deptId}
+            </foreach>
+            )
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND O.user_name like '%${userName}%'
+            </if>
+            <if test="personType != null and personType != ''">
+                AND O.person_type = #{personType}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND O.sex = #{sex}
+            </if>
+            <if test="nation != null and nation != ''">
+                AND O.nation = #{nation}
+            </if>
+            <if test="highestEducation != null and highestEducation != ''">
+                AND O.highest_education = #{highestEducation}
+            </if>
+            <if test="highestDegree != null and highestDegree != ''">
+                AND O.highest_degree = #{highestDegree}
+            </if>
+            <if test="technicalPosition != null and technicalPosition != ''">
+                AND O.technical_position = #{technicalPosition}
+            </if>
+            <if test="administrativeLevel != null and administrativeLevel != ''">
+                AND O.administrative_level IN (${administrativeLevel})
+            </if>
+            <if test="firstEducation != null and firstEducation != ''">
+                AND O.first_education = #{firstEducation}
+            </if>
+            <if test="firstDegree != null and firstDegree != ''">
+                AND O.first_degree = #{firstDegree}
+            </if>
+            <if test="jobEducation != null and jobEducation != ''">
+                AND O.job_education = #{jobEducation}
+            </if>
+            <if test="jobDegree != null and jobDegree != ''">
+                AND O.job_degree = #{jobDegree}
+            </if>
+            <if test="administrativeDuty != null and administrativeDuty != ''">
+                AND O.administrative_duty LIKE '%${administrativeDuty}%'
+            </if>
+            <choose>
+                <when test="trashFlag != null and trashFlag != ''">
+                    AND O.trash_flag = #{trashFlag}
+                </when>
+                <otherwise>
+                    AND (O.trash_flag != '1' OR  O.trash_flag IS NULL)
+                </otherwise>
+            </choose>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY O.${orderBy} ${orderType}
+            </when>
+            <otherwise>
+                ORDER BY O.num ASC,O.id ASC
+            </otherwise>
+        </choose>
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsUserById" resultType="com.yy.young.pms.model.PmsUser">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_user O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!--根据账号查询,user_id字段-->
+    <select id="getByAccount" resultType="com.yy.young.pms.model.PmsUser">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_user O
+        <include refid="joinSql"></include>
+        WHERE O.user_id=#{account}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsUser">
+        INSERT INTO pms_user(
+        id
+        ,user_id
+        ,user_name
+        ,old_name
+        ,sex
+        ,birth
+        ,nation
+        ,place_of_origin
+        ,place_of_birth
+        ,work_start_time
+        ,political_outlook
+        ,join_party_time
+        ,technical_position
+        ,get_time
+        ,appointment_time
+        ,technical_level
+        ,administrative_duty
+        ,tenure_time
+        ,administrative_level
+        ,research_field
+        ,specialty
+        ,highest_education
+        ,highest_degree
+        ,id_card
+        ,overseas_study_experience
+        ,english_level
+        ,photo_address
+        ,remark
+        ,first_education
+        ,job_education
+        ,person_type
+        ,num
+        ,trash_flag
+        ,first_degree
+        ,station
+        ,take_work
+        ,research_field_detail
+        ,job_degree
+        ,temp_work_experience
+        ,to_there_time
+        ,remark_modify_time
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{userName}
+        ,#{oldName}
+        ,#{sex}
+        ,#{birth}
+        ,#{nation}
+        ,#{placeOfOrigin}
+        ,#{placeOfBirth}
+        ,#{workStartTime}
+        ,#{politicalOutlook}
+        ,#{joinPartyTime}
+        ,#{technicalPosition}
+        ,#{getTime}
+        ,#{appointmentTime}
+        ,#{technicalLevel}
+        ,#{administrativeDuty}
+        ,#{tenureTime}
+        ,#{administrativeLevel}
+        ,#{researchField}
+        ,#{specialty}
+        ,#{highestEducation}
+        ,#{highestDegree}
+        ,#{idCard}
+        ,#{overseasStudyExperience}
+        ,#{englishLevel}
+        ,#{photoAddress}
+        ,#{remark}
+        ,#{firstEducation}
+        ,#{jobEducation}
+        ,#{personType}
+        ,#{num}
+        ,#{trashFlag}
+        ,#{firstDegree}
+        ,#{station}
+        ,#{takeWork}
+        ,#{researchFieldDetail}
+        ,#{jobDegree}
+        ,#{tempWorkExperience}
+        ,#{toThereTime}
+        ,#{remarkModifyTime}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsUser">
+        UPDATE pms_user
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="oldName != null">
+                old_name = #{oldName},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="nation != null">
+                nation = #{nation},
+            </if>
+            <if test="placeOfOrigin != null">
+                place_of_origin = #{placeOfOrigin},
+            </if>
+            <if test="placeOfBirth != null">
+                place_of_birth = #{placeOfBirth},
+            </if>
+            <if test="workStartTime != null">
+                work_start_time = #{workStartTime},
+            </if>
+            <if test="politicalOutlook != null">
+                political_outlook = #{politicalOutlook},
+            </if>
+            <if test="joinPartyTime != null">
+                join_party_time = #{joinPartyTime},
+            </if>
+            <if test="technicalPosition != null">
+                technical_position = #{technicalPosition},
+            </if>
+            <if test="getTime != null">
+                get_time = #{getTime},
+            </if>
+            <if test="appointmentTime != null">
+                appointment_time = #{appointmentTime},
+            </if>
+            <if test="technicalLevel != null">
+                technical_level = #{technicalLevel},
+            </if>
+            <if test="administrativeDuty != null">
+                administrative_duty = #{administrativeDuty},
+            </if>
+            <if test="tenureTime != null">
+                tenure_time = #{tenureTime},
+            </if>
+            <if test="administrativeLevel != null">
+                administrative_level = #{administrativeLevel},
+            </if>
+            <if test="researchField != null">
+                research_field = #{researchField},
+            </if>
+            <if test="specialty != null">
+                specialty = #{specialty},
+            </if>
+            <if test="highestEducation != null">
+                highest_education = #{highestEducation},
+            </if>
+            <if test="highestDegree != null">
+                highest_degree = #{highestDegree},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard},
+            </if>
+            <if test="overseasStudyExperience != null">
+                overseas_study_experience = #{overseasStudyExperience},
+            </if>
+            <if test="englishLevel != null">
+                english_level = #{englishLevel},
+            </if>
+            <if test="photoAddress != null">
+                photo_address = #{photoAddress},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="firstEducation != null">
+                first_education = #{firstEducation},
+            </if>
+            <if test="jobEducation != null">
+                job_education = #{jobEducation},
+            </if>
+            <if test="personType != null">
+                person_type = #{personType},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="trashFlag != null">
+                trash_flag = #{trashFlag},
+            </if>
+            <if test="firstDegree != null">
+                first_degree = #{firstDegree},
+            </if>
+            <if test="station != null">
+                station = #{station},
+            </if>
+            <if test="takeWork != null">
+                take_work = #{takeWork},
+            </if>
+            <if test="researchFieldDetail != null">
+                research_field_detail = #{researchFieldDetail},
+            </if>
+            <if test="jobDegree != null">
+                job_degree = #{jobDegree},
+            </if>
+            <if test="tempWorkExperience != null">
+                temp_work_experience = #{tempWorkExperience},
+            </if>
+            <if test="toThereTime != null">
+                to_there_time = #{toThereTime},
+            </if>
+            <if test="remarkModifyTime != null">
+                remark_modify_time = #{remarkModifyTime},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_user WHERE ID = #{id}
+    </delete>
+    <!--删除人员相关的所有子信息-->
+    <delete id="deleteAllInfoAboutUser">
+        DELETE FROM pms_education WHERE USER_ID = #{userId};
+        DELETE FROM pms_honor_title WHERE USER_ID = #{userId};
+        DELETE FROM pms_join_project WHERE USER_ID = #{userId};
+        DELETE FROM pms_leader_evaluation WHERE USER_ID = #{userId};
+        DELETE FROM pms_main_tech_group WHERE USER_ID = #{userId};
+        DELETE FROM pms_paper WHERE USER_ID = #{userId};
+        DELETE FROM pms_patent WHERE USER_ID = #{userId};
+        DELETE FROM pms_publish WHERE USER_ID = #{userId};
+        DELETE FROM pms_support_project WHERE USER_ID = #{userId};
+        DELETE FROM pms_tech_awards WHERE USER_ID = #{userId};
+        DELETE FROM pms_technology_brace WHERE USER_ID = #{userId};
+        DELETE FROM pms_work WHERE USER_ID = #{userId};
+        DELETE FROM pms_year_check WHERE USER_ID = #{userId};
+        DELETE FROM pms_relations WHERE USER_ID = #{userId}
+    </delete>
+    <!--作废用户-->
+    <update id="trashUser">
+      UPDATE pms_user SET trash_flag = '1' WHERE ID=#{userId}
+    </update>
+</mapper>

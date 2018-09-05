@@ -1,0 +1,136 @@
+@charset "UTF-8";
+.padding-20{
+    padding: 20px;
+}
+.padding-15{
+    padding: 15px;
+}
+.main-bg-color{/*main区域背景色*/
+    background-color: #F1F4F5;
+}
+.clear{ clear: both; display: block;}
+body{
+    font-size: 12px;
+}
+/*对bootstrap等插件相关样式的修改*/
+body .table{
+    table-layout: fixed;
+}
+body .table > tbody > tr > td{
+    vertical-align: middle; /*解决bootstrap表格中文字偏上的问题,原属性为top*/
+    overflow:hidden;white-space:nowrap;text-overflow:ellipsis; /*文字超长时显示为...*/
+   /* white-space:nowrap;word-break:keep-all; overflow:hidden;text-overflow:ellipsis;*/
+}
+body form .table > tbody > tr > td{/*对于表单中的内容,不作处理*/
+    overflow:visible;white-space:normal;text-overflow: inherit;
+}
+body .table>thead>tr>th{
+    vertical-align: middle; /*解决bootstrap表格中标题文字偏下的问题,原属性为bottom*/
+    text-align: center; /*标题行居中*/
+}
+/*文本居中/左/右的设置*/
+body .table > tbody > tr > td.active{
+    text-align:center;
+}
+body .table > tbody > tr > td.active[align="left"]{text-align:left;}
+body .table > tbody > tr > td.active[align="right"]{text-align:right;}
+
+body .pagination{
+    margin: 0px; /*消除分页条的margin属性*/
+}
+body .pagination>li>a{
+    cursor: pointer; /*分页条小手光标*/
+}
+.input-sm{ /*将bootstrap的小输入框高度更改为28px*/
+    height: 28px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+select.input-sm{
+    height: 28px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.btn-sm{
+    height: 28px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+/*ECalendar日期插件
+.ECalendarBox .currentdate h2{
+    margin: 0px;
+}
+.ECalendarBox .currenttime{
+    height: 0px;
+    display: none;
+}
+.icon{
+    display: none;
+}*/
+/*laydate插件*/
+#laydate_ys{ /*解决年份选择没有滚动条的问题*/
+    overflow: auto;
+}
+body .laydate_box .laydate_bottom{ /*解决底部按钮超出范围的问题*/
+    height: 30px;
+}
+/*对插件相关样式的修改end*/
+
+/*平台公共样式*/
+.page-bar{ /*分页条*/
+    width: 100%;
+}
+.page-bar::after{ /*将分页条拉回文档流*/
+    content: '';
+    display: block;
+    clear: both;
+}
+.search-bar{ /*视图检索栏*/
+    padding: 15px 0px 10px 0px;
+}
+.search-bar .form-group{ /*检索栏中的表单元素*/
+    padding-right: 20px;
+    margin-bottom: 5px;
+}
+.search-bar>.btn{/*检索栏按钮,与输入框对齐*/
+    margin-bottom: 5px;
+}
+.button-bar{ /*按钮栏*/
+    padding: 10px 0px;
+    margin: 0px;
+}
+.button-bar button{
+    margin-right: 5px;
+}
+.font-red{
+    color: red;
+}
+.font-green{
+    color: green;
+}
+.font-blue{
+    color: blue;
+}
+.font-white{
+    color: white;
+}
+.bg-red{
+    background-color: red;
+}
+.bg-green{
+    background-color: green;
+}
+.font-bold{
+    font-weight: bold;
+}
+.font-size-14{
+    font-size: 14px;
+}
+.cursor-hand{
+    cursor: pointer;
+}
+table td.must{ background-image:url(../images/must.gif); background-position:0px center; background-repeat:no-repeat;}
+.button-bar>button[isShow]:not([isShow='']){/*带权限按钮默认隐藏,isShow值为空时不处理*/
+    display: none;
+}
+/*平台公共样式end*/

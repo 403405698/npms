@@ -1,0 +1,66 @@
+平台数据库初始化注意项:
+组织机构表TB_UMS_DEPT默认根节点为ROOT
+
+###前端特殊的标签/样式使用注意事项:
+
+##检索栏
+[class] .search-bar : 检索栏,使用示例(在视图页面中默认id=pageForm):
+<form class="form-inline search-bar" id="pageForm">
+    <div class="form-group">
+        <label class="control-label" for="NAME">姓名&nbsp;</label>
+        <input class="form-control input-sm" id="NAME" name="NAME" placeholder="用户名" autocomplete="off" type="text">
+    </div>
+    <button type="button" class="btn btn-primary btn-sm" onclick="joView.select()">
+        <i class="fa fa-search" aria-hidden="true"></i>&nbsp;查询
+    </button>
+</form>
+
+##按钮栏
+[class] .button-bar : 按钮栏,使用示例:
+<div class="form-group button-bar">
+    <button isShow="" type="button" class="btn btn-sm btn-outline btn-default" onclick="joView.add()">
+        <i class="fa fa-bell" aria-hidden="true"></i>&nbsp;新增
+    </button>
+</div>
+[attr] isShow : 对按钮栏中的按钮进行显示控制,属性值为布尔表达式
+
+##分页
+[class] .page-bar : 分页条,使用示例:
+<div class="page-bar" gridId="mainList">
+</div>
+joView对象会在加载完表格数据后自动对分页条进行处理.
+[attr] gridId : 标识当前分页条所属表格的id. ###TODO 暂时没有作处理,可以不写
+
+##表单区域
+[attr] align 该属性控制标题文字 靠左left/居中center/靠右right,不写该属性默认为居中
+[class] .active 给单元格着色
+*表单元素使用的基本的bootstrap样式
+#表单只读处理
+[class] .readonly-add 表单处于新增状态时只读
+[class] .readonly-edit 表单处于编辑状态时只读
+恒是只读的元素直接在属性里面写readonly
+示例代码:
+<form id="pageForm" name="pageForm" action="" method="post">
+    <table class="table table-bordered table-condensed">
+        <tr>
+            <td width="15%" class="active" align="">编　　号</td>
+            <td>
+                <input type="text" name="ID" class="form-control input-sm readonly-edit" ErrLength="3" ErrInfo="错误提示信息"/>
+            </td>
+            <td width="15%" class="active">姓　　名</td>
+            <td>
+                <input type="text" class="form-control input-sm" name="NAME" ErrEmpty="姓名不允许为空"/>
+            </td>
+        </tr>
+    </table>
+</form>
+*表单第一行的内容中标题宽度需要设置,否则会很难看
+##表单验证
+正如上面的表单示例所示:
+1.ErrEmpty 非空提示,含有此属性说明该项为必填项,属性值为提示信息;
+2.ErrLength 长度验证,值为该项允许的最大长度;
+3.ErrInfo 错误提示,发生验证错误时的提示信息;
+4.ErrReg 验证的正则表达式,可以自定义 #TODO 待完善
+5.ErrNumber 数字验证
+
+

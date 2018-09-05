@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/context
+          				http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <!-- 注解驱动 -->  
+    <!--<mvc:annotation-driven conversion-service="conversionService"/>-->
+
+	<!-- 对静态资源文件的访问 -->
+	<mvc:resources mapping="/static/**" location="/static/" />
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters register-defaults="true">
+			<!--解决返回字符串乱码问题:返回对象没有问题,如果返回的是个字符串会出现乱码-->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!--日期转换,将请求中的时间符串转为对应实体类时间类型参数-->
+	<bean id="conversionService"
+		  class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<set>
+				<bean class="com.yy.young.base.core.DateFormatter"></bean>
+			</set>
+		</property>
+	</bean>
+
+	<!-- 包扫描:对所有的Controller进行包扫描 -->
+    <!--  <context:component-scan base-package="com.rookie.app.web"/> -->
+    
+    <!-- 定义spring mvc的注解扫描内容 -->
+	<context:component-scan base-package="com.yy.young.**.web">
+		<!-- 定义扫描排除 -->
+   		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+   		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+    
+    <!-- 内部资源视图解析器 -->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<!--<property name="prefix" value="/page/"/>-->
+    	<!-- <property name="suffix" value=".jsp"/> -->
+    </bean>
+
+    
+    <!-- 文件上传的视图解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="10485760"/><!-- 10M -->
+    </bean>
+    
+    <!-- 统一异常处理 -->
+    <bean id="exceptionHandler" class="com.yy.young.base.exception.ExceptionHandler"/>
+    
+
+    
+</beans>

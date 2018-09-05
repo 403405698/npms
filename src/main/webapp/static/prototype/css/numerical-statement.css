@@ -1,0 +1,189 @@
+.layui-table a.edit {
+    margin: 0;
+}
+
+.layui-form-label {
+    width: 90px;
+}
+
+.layui-form-item .layui-input-inline {
+    width: 144px;
+}
+
+.layui-form-item .layui-input-inline.big {
+    width: 180px;
+}
+
+.layui-form-input,
+.layui-form-select {
+    width: 100%;
+}
+
+.gray {
+    width: 100%;
+    height: 24px;
+    background: #f3f2f0;
+}
+
+.chart {
+    background: #f3f2f0;
+}
+
+.chart #chart1,
+.chart #chart2,
+.chart #chart3,
+.chart #chart4,
+.chart #chart5,
+.chart #chart6 {
+    height: 298px;
+    width: 100%;
+    padding-bottom: 20px;
+    border-top: 1px solid #E9E9E9;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+.tit {
+    height: 23px;
+    line-height: 23px;
+    padding: 18px;
+    background: #fff;
+}
+
+.tit span {
+    font-size: 20px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.tit i {
+    color: #9B9B9B;
+}
+
+.chart .tab-item {
+    width: 49%;
+    height: 380px;
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.12);
+    background: #fff;
+    float: left;
+    margin-right: 2%;
+    position: relative;
+}
+
+.chart .tab-item:last-child {
+    margin: 0;
+}
+
+.chart .tab-item .txt {
+    position: absolute;
+    top: 83px;
+    left: 18px;
+}
+
+.chart .tab-item .txt h2 {
+    font-size: 16px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.chart .tab-item .txt p {
+    font-size: 12px;
+    color: #9B9B9B;
+    letter-spacing: 0;
+    line-height: 26px;
+}
+
+.chart .tab-item span.title {
+    position: absolute;
+    left: 17px;
+    top: 15px;
+    font-size: 20px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.chart .tab-item .line {
+    position: absolute;
+    top: 59px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #E9E9E9;
+    opacity: 1;
+}
+
+.layui-tab-title {
+    height: 64px;
+}
+
+.layui-tab-title li {
+    width: 20%;
+    padding: 0;
+    height: 64px;
+    line-height: 64px;
+    font-size: 18px;
+    color: #C7C7CD;
+    letter-spacing: 0;
+}
+
+.layui-tab-title .layui-this:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 64px;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-color: #fff;
+    border-radius: 2px 2px 0 0;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.chart1,
+.chart2 {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.legend {
+    position: absolute;
+    z-index: 2;
+    background: #fff;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.legend li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.legend li span {
+    display: inline-block;
+    background: #FB497C;
+    height: 11px;
+    width: 11px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.legend li:nth-child(2) span {
+    background: #FECA34;
+}
+
+.legend li:nth-child(3) span {
+    background: #7ED321;
+}
+
+.legend li:nth-child(4) span {
+    background: #4FCCFF;
+}
+
+.legend li:nth-child(5) span {
+    background: #378CEF;
+}

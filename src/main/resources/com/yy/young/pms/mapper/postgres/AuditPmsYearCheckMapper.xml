@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsYearCheck">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.user_id AS "userId",
+        O.serial_number AS "serialNumber",
+        O.years AS "years",
+        O.check_score AS "checkScore",
+        O.stype AS "stype",
+        O.quarter AS "quarter",
+        O.quarter_one AS "quarterOne",
+        O.quarter_two AS "quarterTwo",
+        O.quarter_three AS "quarterThree",
+        O.quarter_four AS "quarterFour",
+        O.item_id AS "itemId",
+        O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsYearCheck" resultType="com.yy.young.pms.model.AuditPmsYearCheck">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_year_check O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="years != null and years != ''">
+                AND O.years = #{years}
+            </if>
+            <if test="stype != null and stype != ''">
+                AND O.stype = #{stype}
+            </if>
+            <if test="quarter != null and quarter != ''">
+                AND O.quarter = #{quarter}
+            </if>
+            <if test="quarterOne != null and quarterOne != ''">
+                AND O.quarter_one = #{quarterOne}
+            </if>
+            <if test="quarterTwo != null and quarterTwo != ''">
+                AND O.quarter_two = #{quarterTwo}
+            </if>
+            <if test="quarterThree != null and quarterThree != ''">
+                AND O.quarter_three = #{quarterThree}
+            </if>
+            <if test="quarterFour != null and quarterFour != ''">
+                AND O.quarter_four = #{quarterFour}
+            </if>
+            <if test="status != null">
+                AND O.status = #{status}
+            </if>
+        </where>
+    </select>
+    <!-- 模块审核，获取需要审核的用户ID -->
+    <select id="getModuleUser" parameterType="com.yy.young.pms.model.AuditPmsEducation" resultType="com.yy.young.pms.model.AuditPmsEducation">
+        SELECT
+        distinct O.user_id
+        FROM audit_pms_education O
+        <include refid="joinSql"></include>
+        WHERE O.status = 5
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsYearCheck" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_year_check O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsYearCheck">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_year_check O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsYearCheck">
+        INSERT INTO audit_pms_year_check(
+            id,
+            user_id,
+            serial_number,
+            years,
+            check_score,
+            stype,
+            quarter,
+            quarter_one,
+            quarter_two,
+            quarter_three,
+            quarter_four,
+            item_id,
+            status
+            ,lock_status
+        ) VALUES(
+            #{id},
+            #{userId},
+            #{serialNumber},
+            #{years},
+            #{checkScore},
+            #{stype},
+            #{quarter},
+            #{quarterOne},
+            #{quarterTwo},
+            #{quarterThree},
+            #{quarterFour},
+            #{itemId},
+            #{status}
+            ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsYearCheck">
+        UPDATE audit_pms_year_check
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="userId != null">
+            user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+            serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+            years = #{years},
+            </if>
+            <if test="checkScore != null">
+            check_score = #{checkScore},
+            </if>
+            <if test="stype != null">
+            stype = #{stype},
+            </if>
+            <if test="quarter != null">
+            quarter = #{quarter},
+            </if>
+            <if test="quarterOne != null">
+            quarter_one = #{quarterOne},
+            </if>
+            <if test="quarterTwo != null">
+            quarter_two = #{quarterTwo},
+            </if>
+            <if test="quarterThree != null">
+            quarter_three = #{quarterThree},
+            </if>
+            <if test="quarterFour != null">
+            quarter_four = #{quarterFour},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_year_check WHERE ID = #{id}
+    </delete>
+</mapper>

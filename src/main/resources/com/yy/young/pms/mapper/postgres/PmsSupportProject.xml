@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsSupportProject">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.years AS "years"
+        ,O.plan_project_name AS "planProjectName"
+        ,O.personnel_level AS "personnelLevel"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPmsSupportProjectList" parameterType="com.yy.young.pms.model.PmsSupportProject" resultType="com.yy.young.pms.model.PmsSupportProject">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_support_project O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="planProjectName != null and planProjectName != ''">
+                AND O.plan_project_name LIKE '%${planProjectName}%'
+            </if>
+        </where>
+        ORDER BY O.years DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsSupportProjectById" resultType="com.yy.young.pms.model.PmsSupportProject">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_support_project O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsSupportProject">
+        INSERT INTO pms_support_project(
+        id
+        ,user_id
+        ,serial_number
+        ,years
+        ,plan_project_name
+        ,personnel_level
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{years}
+        ,#{planProjectName}
+        ,#{personnelLevel}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsSupportProject">
+        UPDATE pms_support_project
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="planProjectName != null">
+                plan_project_name = #{planProjectName},
+            </if>
+            <if test="personnelLevel != null">
+                personnel_level = #{personnelLevel},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_support_project WHERE ID = #{id}
+    </delete>
+</mapper>

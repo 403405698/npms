@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>young</display-name>
+	<welcome-file-list>
+		<welcome-file>page/login.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!--Spring-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:datasource.xml;
+			classpath:application-app.xml;
+			classpath*:application-*.xml;
+			classpath*:com/yy/young/interfaces/ums/interface-native-ums.xml;
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- domain handler listener -->
+	<listener>
+		<listener-class>com.yy.young.common.config.DomainHandler</listener-class>
+	</listener>
+
+	<!-- SpringMVC -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				classpath*:springmvc-servlet.xml;
+				classpath*:aop-log.xml;
+			</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern><!--注意这里不能使用/*,/*会连同jsp一起拦截,导致404-->
+	</servlet-mapping>
+
+	<!-- druid -->
+	<servlet>
+		<servlet-name>DruidStatView</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DruidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>DruidWebStatFilter</filter-name>
+		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+		<init-param>
+			<param-name>exclusions</param-name>
+			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>DruidWebStatFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 字符编码过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- SSO单点登录过滤器 -->
+	<filter>
+		<filter-name>SSOFilter</filter-name>
+		<filter-class>com.yy.young.ums.client.filter.SSOFilter</filter-class>
+		<!--单点白名单-->
+		<init-param>
+			<param-name>allowUrls</param-name>
+			<param-value>/login;/static/**;/**/login.jsp;/**/login_center.jsp;/young/;/**/login.action;/**/logout.action;/**/token.action;/**/verifySSO.action;/*/fs/file/transferFile.action;/**/error.jsp;</param-value>
+		</init-param>
+		<!--客户端重定向地址,该地址必定属于白名单中的地址,否则会导致重定向循环错误-->
+		<init-param>
+			<param-name>redirectTo</param-name>
+			<param-value>/young/login/</param-value>
+		</init-param>
+		<!--单点验证地址-->
+		<init-param>
+			<param-name>ssoVerifyUrl</param-name>
+			<param-value>http://127.0.0.1:8080/young/verifySSO</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SSOFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SSOFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SSOFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- XSS跨站脚本攻击过滤器 -->
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.yy.young.common.filter.XSSFilter</filter-class>
+		<!--白名单-->
+		<init-param>
+			<param-name>white</param-name>
+			<param-value>/login.action;/cms/view/*;</param-value>
+		</init-param>
+		<!--敏感字黑名单-->
+		<init-param>
+			<param-name>black</param-name>
+			<param-value>script;alert;select;*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- 错误处理页面 -->
+	<!--<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/page/common/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/page/common/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/page/common/404.jsp</location>
+	</error-page>-->
+
+	<!-- session过期 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+</web-app>

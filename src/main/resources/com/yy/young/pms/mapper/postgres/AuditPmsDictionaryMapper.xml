@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditPmsDictionary">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.pdic_id AS "pdicId",
+        O.dic_value AS "dicValue",
+        O.dic_desc AS "dicDesc",
+        O.dic_type AS "dicType",
+        O.dic_num AS "dicNum",
+        O.bedic_id AS "bedicId",
+        O.remark AS "remark",
+        O.item_id AS "itemId",
+        O.status AS "status"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditPmsDictionary" resultType="com.yy.young.pms.model.AuditPmsDictionary">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_dictionary O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditPmsDictionary" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_pms_dictionary O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditPmsDictionary">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_pms_dictionary O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditPmsDictionary">
+        INSERT INTO audit_pms_dictionary(
+            id,
+            pdic_id,
+            dic_value,
+            dic_desc,
+            dic_type,
+            dic_num,
+            bedic_id,
+            remark,
+            item_id,
+            status
+        ) VALUES(
+            #{id},
+            #{pdicId},
+            #{dicValue},
+            #{dicDesc},
+            #{dicType},
+            #{dicNum},
+            #{bedicId},
+            #{remark},
+            #{itemId},
+            #{status}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditPmsDictionary">
+        UPDATE audit_pms_dictionary
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="pdicId != null">
+            pdic_id = #{pdicId},
+            </if>
+            <if test="dicValue != null">
+            dic_value = #{dicValue},
+            </if>
+            <if test="dicDesc != null">
+            dic_desc = #{dicDesc},
+            </if>
+            <if test="dicType != null">
+            dic_type = #{dicType},
+            </if>
+            <if test="dicNum != null">
+            dic_num = #{dicNum},
+            </if>
+            <if test="bedicId != null">
+            bedic_id = #{bedicId},
+            </if>
+            <if test="remark != null">
+            remark = #{remark},
+            </if>
+            <if test="itemId != null">
+            item_id = #{itemId},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_pms_dictionary WHERE ID = #{id}
+    </delete>
+</mapper>

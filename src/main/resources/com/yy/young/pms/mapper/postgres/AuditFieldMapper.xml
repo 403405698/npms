@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.auditField">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id",
+        O.table_name AS "tableName",
+        O.table_field AS "tableField",
+        O.status AS "status"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getList" parameterType="com.yy.young.pms.model.AuditField" resultType="com.yy.young.pms.model.AuditField">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_field O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!-- 统计数量 -->
+    <select id="count" parameterType="com.yy.young.pms.model.AuditField" resultType="int">
+        SELECT
+            count(*)
+        FROM audit_field O
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据编号查询-->
+    <select id="get" resultType="com.yy.young.pms.model.AuditField">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM audit_field O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="tableName != null and tableName != ''">
+                AND O.table_name = #{tableName}
+            </if>
+            <if test="tableField != null and tableField != ''">
+                AND O.table_field = #{tableField}
+            </if>
+        </where>
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.AuditField">
+        INSERT INTO audit_field(
+            id,
+            table_name,
+            table_field,
+            status
+        ) VALUES(
+            #{id},
+            #{tableName},
+            #{tableField},
+            #{status}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.AuditField">
+        UPDATE audit_field
+        <set>
+            <if test="id != null">
+            id = #{id},
+            </if>
+            <if test="tableName != null">
+            table_name = #{tableName},
+            </if>
+            <if test="tableField != null">
+            table_field = #{tableField},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM audit_field WHERE ID = #{id}
+    </delete>
+</mapper>

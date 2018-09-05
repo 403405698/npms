@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 
+	<settings>
+		<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+		<setting name="lazyLoadingEnabled" value="false" />
+	    <setting name="jdbcTypeForNull" value="NULL" /><!-- 空值处理 -->
+        <setting name="logImpl" value="LOG4J"/>  
+    </settings>
+
+    <plugins>
+		<plugin interceptor="com.yy.young.dal.postgres.PageInterceptorPlugin">
+			<!-- <property name="dialect" value="oracle"/> -->
+		</plugin>
+	</plugins>
+
+	<!-- 新增测试 start -->
+<!--	<databaseIdProvider type="DB_VENDOR">
+		<property name="MySQL" value="mysql"/>
+		<property name="Oracle" value="oracle" />
+		<property name="SQL Server" value="sqlserver"/>
+		<property name="DB2" value="DB2" />
+	</databaseIdProvider>-->
+	<!-- 新增测试end -->
+
+</configuration>

@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'PingFangSC-Regular', "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+a:hover {
+    color: #4a4a4a;
+}
+
+.container {
+    width: calc(100% - 60px);
+    margin: 20px 32px 33px 22px;
+    background: #fff;
+    min-height: 100%;
+    height: auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear:after {
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0;
+    content: "";
+}
+
+.zoom {
+    zoom: 1;
+}
+
+.help-tit {
+    font-size: 18px;
+    padding: 18px;
+    border-bottom: 1px solid #dadada;
+}
+
+.help-tit .title {
+    font-size: 20px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+}
+
+.help-content {
+    padding: 32px 48px;
+}
+
+.help-content p {
+    font-size: 14px;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: 32px;
+}
+
+.help-content p a {
+    font-size: 14px;
+    color: #4ea0ff;
+    letter-spacing: 0;
+    line-height: 32px;
+    cursor: pointer;
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.pmsMainTechGroup">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.start_time AS "startTime"
+        ,O.stop_time AS "stopTime"
+        ,O.group_name AS "groupName"
+        ,O.post AS "post"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getPmsMainTechGroupList" parameterType="com.yy.young.pms.model.PmsMainTechGroup" resultType="com.yy.young.pms.model.PmsMainTechGroup">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_main_tech_group O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="groupName != null and groupName != ''">
+                AND O.group_name LIKE '%${groupName}%'
+            </if>
+        </where>
+        ORDER BY O.start_time DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getPmsMainTechGroupById" resultType="com.yy.young.pms.model.PmsMainTechGroup">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_main_tech_group O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.PmsMainTechGroup">
+        INSERT INTO pms_main_tech_group(
+        id
+        ,user_id
+        ,serial_number
+        ,start_time
+        ,stop_time
+        ,group_name
+        ,post
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{startTime}
+        ,#{stopTime}
+        ,#{groupName}
+        ,#{post}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.PmsMainTechGroup">
+        UPDATE pms_main_tech_group
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName},
+            </if>
+            <if test="post != null">
+                post = #{post},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_main_tech_group WHERE ID = #{id}
+    </delete>
+</mapper>

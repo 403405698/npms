@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.young.pms.mapper.joinProject">
+    <!--查询字段信息-->
+    <sql id="searchCol">
+        O.id AS "id"
+        ,O.user_id AS "userId"
+        ,O.serial_number AS "serialNumber"
+        ,O.project_type AS "projectType"
+        ,O.start_time AS "startTime"
+        ,O.stop_time AS "stopTime"
+        ,O.project_name AS "projectName"
+        ,O.funds AS "funds"
+        ,O.role AS "role"
+        ,O.status AS "status"
+        ,O.lock_status AS "lockStatus"
+    </sql>
+    <!--关联查询相关sql-->
+    <sql id="joinSql">
+    </sql>
+    <!-- 查询 -->
+    <select id="getJoinProjectList" parameterType="com.yy.young.pms.model.JoinProject" resultType="com.yy.young.pms.model.JoinProject">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_join_project O
+        <include refid="joinSql"></include>
+        <where>
+            <if test="id != null and id != ''">
+                AND O.ID = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND O.user_id = #{userId}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                AND O.project_name LIKE '%${projectName}%'
+            </if>
+        </where>
+        ORDER BY O.start_time DESC
+    </select>
+    <!--根据编号查询-->
+    <select id="getJoinProjectById" resultType="com.yy.young.pms.model.JoinProject">
+        SELECT
+        <include refid="searchCol"></include>
+        FROM pms_join_project O
+        <include refid="joinSql"></include>
+        WHERE O.ID=#{id}
+    </select>
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yy.young.pms.model.JoinProject">
+        INSERT INTO pms_join_project(
+        id
+        ,user_id
+        ,serial_number
+        ,project_type
+        ,start_time
+        ,stop_time
+        ,project_name
+        ,funds
+        ,role
+        ,status
+        ,lock_status
+        ) VALUES(
+        #{id}
+        ,#{userId}
+        ,#{serialNumber}
+        ,#{projectType}
+        ,#{startTime}
+        ,#{stopTime}
+        ,#{projectName}
+        ,#{funds}
+        ,#{role}
+        ,#{status}
+        ,#{lockStatus}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="com.yy.young.pms.model.JoinProject">
+        UPDATE pms_join_project
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="serialNumber != null">
+                serial_number = #{serialNumber},
+            </if>
+            <if test="projectType != null">
+                project_type = #{projectType},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime},
+            </if>
+            <if test="projectName != null">
+                project_name = #{projectName},
+            </if>
+            <if test="funds != null">
+                funds = #{funds},
+            </if>
+            <if test="role != null">
+                role = #{role},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus},
+            </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM pms_join_project WHERE ID = #{id}
+    </delete>
+</mapper>
